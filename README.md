@@ -21,11 +21,25 @@ The Pet Palace API has got # nr of apps, the different apps and their purpose is
 
 ### Profile app
 
-An app for the user's profile, the profile is created automatically when they sign up and create a user, they cannot delete the profile, only update it.
+An app for the user's profile, the profile is created automatically when they sign up and create a user, the profile can only be edited, it is not possible to delete it, and the user can also only have one profile.
 
 The profile model holds information about the user,
 such as name, description of them, profile image, if they are a pet owner or not,
 and when the profile was created and updated.
+
+The name will be generated from the username, and a default image will be displayed until the user changes it.
+If the user is a pet owner, they will need to update their profile and check the checkbox for a pet owner, if not, they will be a regular user.
+If the user checks the pet owner box, they will get a small icon next to their name, and users should be able to filter to display posts and ads from only pet owners if they'd like.
+
+### Post app
+
+The code for the Post app is greatly inspired by the Code Institute django rest framework walkthrough, with minor alterations to fit my project.
+
+All logged-in users will be able to create, update and delete a post.
+The post will contain an image, title, content, category, date of creation and date of updating.
+
+The content field is allowed to be blank, but the user must add a title, if they don’t add an image a default will be displayed.
+The user can also add a filter to the image.
 
 ## Setting up the project
 
