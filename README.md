@@ -1,5 +1,17 @@
 # Pet Palace API
 
+## Apps
+
+The Pet Palace API has got # nr of apps, the different apps and their purpose is described as follows:
+
+### Profile app
+
+An app for the user's profile, the profile is created automatically when they sign up and create a user, they cannot delete the profile, only update it.
+
+The profile model holds information about the user,
+such as name, description of them, profile image, if they are a pet owner or not,
+and when the profile was created and updated.
+
 ## Setting up the project
 
 I have followed the Code Institutes template from the Django rest DRF_API walkthrough to set up the project with Django and Cloudinary.
@@ -44,3 +56,16 @@ DEFAULT_FILE_STORAGE =
 ```
 
 Now the basic project was finished, the next step were to start setting up all the apps and adding them to the settings.py file.
+
+## Testing
+
+### Profile app
+
+In the profile app, there was one automated test to make sure that a profile was created for every new user.
+
+![testcaseprofiles](/documentation/testing/profilecreatetest.png)
+
+The test failed the first time due to that there were three users created and the test only expected two profiles,
+when changed to expect three profiles instead the test was successful.
+
+![testcaseprofileresult](/documentation/testing/testprofileresult.png)
