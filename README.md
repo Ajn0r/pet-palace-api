@@ -1,5 +1,18 @@
 # Pet Palace API
 
+## Models
+
+At the start of the project, a database model was created to map out the scope and information needs for the database.
+The post, comments, likes, following and profile entities are greatly inspired by the Code Institue django rest API walkthrough project, the rest is custom to this project.
+
+A conceptual model was made at first to easily visualise what the database would look like and which entities were needed.
+
+![conceptual](/documentation/models/konceptuallmodel.png)
+
+Once that was finished a more detailed logical database model was made with all attributes and data types.
+
+The scope of the database is quite wide to take into consideration that the project might grow in the future, leaving room for future features that might not be implemented in the first release.
+
 ## Apps
 
 The Pet Palace API has got # nr of apps, the different apps and their purpose is described as follows:
