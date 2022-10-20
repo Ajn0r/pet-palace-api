@@ -11,6 +11,8 @@ A conceptual model was made at first to easily visualise what the database would
 
 Once that was finished a more detailed logical database model was made with all attributes and data types.
 
+![logical](/documentation/models/petpalacelogicalmodel.png)
+
 The scope of the database is quite wide to take into consideration that the project might grow in the future, leaving room for future features that might not be implemented in the first release.
 
 ## Apps
