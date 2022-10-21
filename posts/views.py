@@ -7,6 +7,8 @@ from pet_palace_api.permissions import IsOwnerOrReadOnly
 class PostList(generics.ListCreateAPIView):
     """
     Class for viewing posts and creating if logged in.
+    inspired by the Code Institute
+    django rest walkthrough project
     """
     serializer_class = PostSerializer
     permission_classes = [
@@ -24,6 +26,8 @@ class PostList(generics.ListCreateAPIView):
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     Class for retriving a post to view, edit or delete
+    inspired by the Code Institute
+    django rest walkthrough project
     """
     serializer_class = PostSerializer
     permission_classes = [IsOwnerOrReadOnly]

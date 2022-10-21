@@ -5,6 +5,8 @@ from .models import Profile
 class ProfileSerializer(serializers.ModelSerializer):
     """
     Serializer class for profiles
+    inspired by the Code Institute
+    django rest walkthrough project
     """
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
