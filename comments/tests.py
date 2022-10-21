@@ -45,3 +45,25 @@ class CommentDetailTests(APITestCase):
     def test_not_retriving_comments_with_invalid_id(self):
         response = self.client.get('/comments/1545')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_user_can_update_own_comment(self):
+        self.client.login(username='ere', password='pass')
+        response = self.client.put('/comments/1', {'content': 'New content'})
+        comment = Comment.objects.filter(pk=1).first()
+        self.assertEqual(comment.content, 'New content')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_user_cannot_update_other_users_comment(self):
+        self.client.login(username='dere', password='pass')
+        response = self.client.put('/comments/1', {'content': 'New content'})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_user_can_delete_comment(self):
+        self.client.login(username='ere', password='pass')
+        response = self.client.delete('/comments/1')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_user_cannot_delete_other_users_comment(self):
+        self.client.login(username='dere', password='pass')
+        response = self.client.delete('/comments/1')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)

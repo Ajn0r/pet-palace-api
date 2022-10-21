@@ -103,6 +103,15 @@ when changed to expect three profiles instead the test was successful.
 
 Most of the tests in the Post app are from the Code Institute django rest walkthrough, however, four custom tests were made, two for deleting posts and two for making sure the correct default value was set.
 
-All tests passed.
+All tests passed and can be found [here](../pet-palace-api/posts/tests.py)
 
 ![posttest](/documentation/testing/customtestpost.png)
+
+### Comment app
+
+The tests in the Comment app are inspired by the tests in the Code Institute django rest walkthrough.
+
+All the tests passed without any problems, they can be found
+[here](../pet-palace-api/comments/tests.py)
+
+![commenttest](/documentation/testing/commenttest.png)
