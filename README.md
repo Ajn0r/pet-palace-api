@@ -21,13 +21,14 @@ The Pet Palace API has got # nr of apps, the different apps and their purpose is
 
 ### Profile app
 
-An app for the user's profile, the profile is created automatically when they sign up and create a user, the profile can only be edited, it is not possible to delete it, and the user can also only have one profile.
+An app for the user's profile, the profile is created automatically when they sign up and create a user, the profile can only be edited, it is not possible to delete it, and the user can also only have one profile. There is also some functionality to count the number of followings and followers.
 
 The profile model holds information about the user,
 such as name, description of them, profile image, if they are a pet owner or not,
-and when the profile was created and updated.
+and when the profile was created and updated. 
 
-The name will be generated from the username, and a default image will be displayed until the user changes it.
+A default image will be displayed until the user changes it, this is from the Code Institute django rest walkthrough.
+
 If the user is a pet owner, they will need to update their profile and check the checkbox for a pet owner, if not, they will be a regular user.
 If the user checks the pet owner box, they will get a small icon next to their name, and users should be able to filter to display posts and ads from only pet owners if they'd like.
 
@@ -40,6 +41,27 @@ The post will contain an image, title, content, category, date of creation and d
 
 The content field is allowed to be blank, but the user must add a title, if they don’t add an image a default will be displayed.
 The user can also add a filter to the image.
+
+There is some filter and search functionality as well as some functionality to count the number of comments and likes on each post, all from the Code Institute django rest walkthrough code.
+
+### Comment app
+
+The code for the comment app comes from the Code Institute django rest walkthrough with minor alterations and some added testing.
+It allows users to comment on each other's posts and the user can view, update and delete comments.
+
+The user must be logged in to be able to comment and can only edit and delete the comment that they made.
+
+### Like app
+
+The code for the like app comes from the Code Institute django rest walkthrough with minor alterations such as using UniqueConstraint instead of unique_toghether.
+
+It allows users to like each other's posts as well as view and delete the likes, the user must be logged in to be able to like a post and can only delete the likes that they made, they can only like a post once.
+
+### Follower app
+
+The code for the follower app comes from the Code Institute django rest walkthrough with minor alterations such as using UniqueConstraint instead of unique_toghether.
+
+It allows users to follow each other
 
 ## Setting up the project
 
