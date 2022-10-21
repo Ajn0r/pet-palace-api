@@ -5,6 +5,8 @@ from .models import Post
 class PostSerializer(serializers.ModelSerializer):
     """
     Serializer class for posts
+    inspired by the Code Institute
+    django rest walkthrough project
     """
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
