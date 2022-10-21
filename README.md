@@ -98,3 +98,11 @@ The test failed the first time due to that there were three users created and th
 when changed to expect three profiles instead the test was successful.
 
 ![testcaseprofileresult](/documentation/testing/testprofileresult.png)
+
+### Post app
+
+Most of the tests in the Post app are from the Code Institute django rest walkthrough, however, four custom tests were made, two for deleting posts and two for making sure the correct default value was set.
+
+All tests passed.
+
+![posttest](/documentation/testing/customtestpost.png)
