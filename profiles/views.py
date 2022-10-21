@@ -12,14 +12,20 @@ class ProfileList(generics.ListAPIView):
     django rest walkthrough project
     """
     queryset = Profile.objects.annotate(
-        nr_of_post=Count('owner__post', distinct=True)
+        nr_of_post=Count('owner__post', distinct=True),
+        followers_count=Count('owner__followed', distinct=True),
+        following_count=Count('owner__following', distinct=True),
     ).order_by('-created_at')
     serializer_class = ProfileSerializer
     filter_backends = [
         filters.OrderingFilter
     ]
     ordering_fields = [
-        'nr_of_post'
+        'nr_of_post',
+        'following_count',
+        'followers_count',
+        'owner__following__created_at',
+        'owner__followed__created_at',
     ]
 
 
@@ -29,6 +35,10 @@ class ProfileDetail(generics.RetrieveUpdateAPIView):
     inspired by the Code Institute
     django rest walkthrough project
     """
-    queryset = Profile.objects.all()
-    permission_classes = [IsOwnerOrReadOnly]
     serializer_class = ProfileSerializer
+    permission_classes = [IsOwnerOrReadOnly]
+    queryset = Profile.objects.annotate(
+        post_count=Count('owner__post', distinct=True),
+        followers_count=Count('owner__followed', distinct=True),
+        following_count=Count('owner__following', distinct=True),
+    ).order_by('-created_at')
