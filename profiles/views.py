@@ -1,4 +1,5 @@
-from rest_framework import generics
+from django.db.models import Count
+from rest_framework import generics, filters
 from .models import Profile
 from .serializers import ProfileSerializer
 from pet_palace_api.permissions import IsOwnerOrReadOnly
@@ -8,8 +9,16 @@ class ProfileList(generics.ListAPIView):
     """
     Class to display all profiles
     """
-    queryset = Profile.objects.all()
+    queryset = Profile.objects.annotate(
+        nr_of_post=Count('owner__post', distinct=True)
+    ).order_by('-created_at')
     serializer_class = ProfileSerializer
+    filter_backends = [
+        filters.OrderingFilter
+    ]
+    ordering_fields = [
+        'nr_of_post'
+    ]
 
 
 class ProfileDetail(generics.RetrieveUpdateAPIView):
