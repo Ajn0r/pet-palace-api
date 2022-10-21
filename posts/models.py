@@ -24,7 +24,6 @@ class Post(models.Model):
         ('exoticanimals', 'Exotic animals'), ('mammals', 'Mammals'),
         ('fish', 'Fish'), ('reptiles', 'Reptiles'), ('insects', 'Insects'),
         ('uncategorized', 'Uncategorized'), ('other', 'Other')
-
     ]
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
