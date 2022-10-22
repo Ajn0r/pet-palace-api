@@ -152,3 +152,13 @@ All the tests passed without any problems, they can be found
 [here](../pet-palace-api/comments/tests.py)
 
 ![commenttest](/documentation/testing/commenttest.png)
+
+### Pet app
+
+The pet views were tested with various tests, such as if the user could create, update and delete pets, the unique constraint was tested, that the user had the correct amount of pets associated with them and more.
+
+One particularly tricky test was the update pet test, it was supposed to give a 200 response but instead, I got a 400 Bad Request, this was due to using the Put method instead of the Patch method. Once I figured out that the test passed without any issues.
+
+All tests can be found [here](/pets/tests.py)
+
+![pettest](documentation/testing/testpetsview.png)
