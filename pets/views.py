@@ -1,4 +1,5 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, filters
+from django_filters.rest_framework import DjangoFilterBackend
 from pet_palace_api.permissions import IsOwnerOrReadOnly
 from .models import Pet
 from .serializers import PetSerializer
@@ -11,7 +12,20 @@ class PetList(generics.ListCreateAPIView):
     """
     serializer_class = PetSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    # add love and add count later
     queryset = Pet.objects.all()
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.SearchFilter]
+
+    filterset_fields = [
+        'type',
+    ]
+
+    search_fields = [
+        'name',
+        'owner__username',
+    ]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
