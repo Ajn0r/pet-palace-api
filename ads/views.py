@@ -9,6 +9,9 @@ class AdList(generics.ListCreateAPIView):
     queryset = Ad.objects.all()
     serializer_class = AdSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = [
+        'type']
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

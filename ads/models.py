@@ -11,6 +11,13 @@ class Ad(models.Model):
     If no pets added it is a ad for
     pet-sitters offering pet-sittings.
     """
+    PET_CHOISE_AD = [
+        ('C', 'Cat'), ('D', 'Dog'), ('B', 'Bird'),
+        ('H', 'Horse'), ('W', 'Wild animal'),
+        ('E', 'Exotic animal'), ('M', 'Mammal'),
+        ('F', 'Fish'), ('R', 'Reptile'), ('I', 'Insect'),
+        ('O', 'Other'), ('U', 'Unspecified')
+    ]
     STATUS_CHOISES = [
         (0, 'Draft'), (1, 'Active'), (2, 'Ongoing'), (3, 'Finished')
     ]
@@ -19,6 +26,8 @@ class Ad(models.Model):
     ]
     owner = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='ad_owner')
+    pets = models.CharField(
+        choices=PET_CHOISE_AD, default='U', max_length=20)
     type = models.SmallIntegerField(choices=TYPE_CHOISES, default=2)
     title = models.CharField(max_length=70)
     description = models.TextField()
