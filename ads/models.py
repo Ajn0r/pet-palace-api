@@ -14,8 +14,11 @@ class Ad(models.Model):
     STATUS_CHOISES = [
         (0, 'Draft'), (1, 'Active'), (2, 'Ongoing'), (3, 'Finished')
     ]
+    TYPE_CHOISES = [
+        (0, 'Pet-sitting'), (1, 'Pet-sitter'), (2, 'Unspecified')
+    ]
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    pets = models.ManyToManyField(Pet, blank=True)
+    type = models.SmallIntegerField(choices=TYPE_CHOISES, default=2)
     title = models.CharField(max_length=70)
     description = models.TextField()
     image = models.ImageField(
