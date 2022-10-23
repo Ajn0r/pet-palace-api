@@ -1,3 +1,4 @@
+from datetime import date
 from rest_framework import serializers
 from .models import Ad
 
@@ -8,7 +9,8 @@ class AdSerializer(serializers.ModelSerializer):
     """
     owner = serializers.ReadOnlyField(source='ad_owner.username')
     is_owner = serializers.SerializerMethodField()
-    pets = serializers.MultipleChoiceField(choices=Ad.PET_CHOISE_AD)
+    pets = serializers.MultipleChoiceField(
+        choices=Ad.PET_CHOISE_AD).choice_strings_to_values
 
     def get_is_owner(self, obj):
         request = self.context['request']

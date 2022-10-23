@@ -3,4 +3,5 @@ from ads import views
 
 urlpatterns = [
     path('ads/', views.AdList.as_view()),
+    path('ads/new/', views.AdCreate.as_view())
 ]

@@ -5,13 +5,20 @@ from .serializers import AdSerializer
 from pet_palace_api.permissions import IsOwnerOrReadOnly
 
 
-class AdList(generics.ListCreateAPIView):
-    queryset = Ad.objects.all()
+class AdList(generics.ListAPIView):
+    queryset = Ad.objects.filter(status=1)
     serializer_class = AdSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend]
     filterset_fields = [
-        'type']
+        'type',
+        'pets']
+
+
+class AdCreate(generics.CreateAPIView):
+    queryset = Ad.objects.all()
+    serializer_class = AdSerializer
+    permission_classes = [IsOwnerOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
