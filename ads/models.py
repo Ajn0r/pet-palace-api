@@ -17,7 +17,8 @@ class Ad(models.Model):
     TYPE_CHOISES = [
         (0, 'Pet-sitting'), (1, 'Pet-sitter'), (2, 'Unspecified')
     ]
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='ad_owner')
     type = models.SmallIntegerField(choices=TYPE_CHOISES, default=2)
     title = models.CharField(max_length=70)
     description = models.TextField()

@@ -7,7 +7,7 @@ class AdSerializer(serializers.ModelSerializer):
     """
     Serializer class for ads
     """
-    owner = serializers.ReadOnlyField(source='owner.username')
+    owner = serializers.ReadOnlyField(source='ad_owner.username')
     is_owner = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):

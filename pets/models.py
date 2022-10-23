@@ -8,7 +8,7 @@ class Pet(models.Model):
     Creates pets that have a connection
     to a user, one user can have many pets
     """
-    pet_choises = [
+    PET_CHOISES = [
         ('cat', 'Cat'), ('dog', 'Dog'), ('bird', 'Bird'),
         ('horse', 'Horse'), ('wildanimal', 'Wild animal'),
         ('exoticanimal', 'Exotic animal'), ('mammal', 'Mammal'),
@@ -16,10 +16,11 @@ class Pet(models.Model):
         ('other', 'Other')
 
     ]
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='pet_owner')
     name = models.CharField(max_length=50)
     type = models.CharField(
-        max_length=50, choices=pet_choises, default='other')
+        max_length=50, choices=PET_CHOISES, default='other')
     description = models.TextField(blank=True, max_length=365)
     image = models.ImageField(
         upload_to='images/', default="../petprofile_svixn2"
