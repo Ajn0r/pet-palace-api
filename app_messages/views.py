@@ -2,16 +2,20 @@ from django.db.models import Q
 from rest_framework import generics, permissions, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from pet_palace_api.permissions import IsOwnerOrReadOnly
+from pet_palace_api.filters import IsMsgOwnerFilterBackend
 from .models import AppMessage
 from app_messages import serializers
 
 
 class AppMessageList(generics.ListAPIView):
     serializer_class = serializers.AppMessageSerializerList
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly]
+    queryset = AppMessage.objects.all()
     filter_backends = [
         DjangoFilterBackend,
-        filters.SearchFilter
+        filters.SearchFilter,
+        IsMsgOwnerFilterBackend
         ]
     filterset_fields = [
         'owner',
@@ -19,10 +23,6 @@ class AppMessageList(generics.ListAPIView):
     search_fields = [
         'subject'
     ]
-
-    def get_queryset(self):
-        return AppMessage.objects.all().filter(
-            Q(owner=self.request.user.id) | Q(reciver=self.request.user.id))
 
 
 class AppMessageCreate(generics.CreateAPIView):
@@ -38,3 +38,4 @@ class AppMessageDetail(generics.RetrieveDestroyAPIView):
     serializer_class = serializers.AppMessageDetailSerializer
     permission_classes = [IsOwnerOrReadOnly]
     queryset = AppMessage.objects.all()
+    filter_backends = [IsMsgOwnerFilterBackend]

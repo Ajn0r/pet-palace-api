@@ -1,3 +1,12 @@
-from django.test import TestCase
+from django.contrib.auth.models import User
+from .models import AppMessage
+from rest_framework import status
+from rest_framework.test import APITestCase
 
-# Create your tests here.
+
+class AppMessageListTest(APITestCase):
+    """
+    Class to test the view for
+    listing all messages that belongs to
+    owner and revicer
+    """
