@@ -43,7 +43,7 @@ class Ad(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['-date_from', '-created_at']
+        ordering = ['date_from', '-created_at']
 
     def __str__(self):
         return f"{self.owner}'s ad {self.title}"

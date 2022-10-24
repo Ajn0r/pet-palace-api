@@ -25,7 +25,7 @@ An app for the user's profile, the profile is created automatically when they si
 
 The profile model holds information about the user,
 such as name, description of them, profile image, if they are a pet owner or not,
-and when the profile was created and updated. 
+and when the profile was created and updated.
 
 A default image will be displayed until the user changes it, this is from the Code Institute django rest walkthrough.
 
