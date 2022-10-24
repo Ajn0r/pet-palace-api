@@ -78,6 +78,17 @@ If the user has two pets with the same name born on the same day, they will need
 
 There is a filter functionality for the different types of pets, and a search function for the owner's username or the pet's name.
 
+### Ad app
+
+The Ad app is of use for both pet owners and pet sitters, they can both make ads depending on if they require a pet sitter, or is available for pet sittings. The ad contains a title, description, image, dates from and to, compensation, location, status, pets, type and dates of creation and updating.
+
+The compensation is a Charfield to give the user a bit more freedom to choose what type of compensation that will be given or wanted, the image field allows the user to add an image of either their pets or themselves, the latter mainly for pet-sitters.
+
+The status fields allow the user to choose if it’s a draft, active, ongoing or finished and the Type attribute allows users to specify if it is a pet-sitting, pet-sitter or other ad making it easy to filter later.
+The pet attribute is a multiple-choice where the user can specify what type of pet they either need a pet sitting or can pet sit.
+
+The users can filter ads on pets, status, ad owners and the type of ad it is.
+
 ## Setting up the project
 
 I have followed the Code Institutes template from the Django rest DRF_API walkthrough to set up the project with Django and Cloudinary.
@@ -125,7 +136,7 @@ Now the basic project was finished, the next step were to start setting up all t
 
 ## Testing
 
-### Profile app
+### Profile views
 
 In the profile app, there was one automated test to make sure that a profile was created for every new user.
 
@@ -136,7 +147,7 @@ when changed to expect three profiles instead the test was successful.
 
 ![testcaseprofileresult](/documentation/testing/testprofileresult.png)
 
-### Post app
+### Post views
 
 Most of the tests in the Post app are from the Code Institute django rest walkthrough, however, four custom tests were made, two for deleting posts and two for making sure the correct default value was set.
 
@@ -144,7 +155,7 @@ All tests passed and can be found [here](../pet-palace-api/posts/tests.py)
 
 ![posttest](/documentation/testing/customtestpost.png)
 
-### Comment app
+### Comment views
 
 The tests in the Comment app are inspired by the tests in the Code Institute django rest walkthrough.
 
@@ -153,7 +164,7 @@ All the tests passed without any problems, they can be found
 
 ![commenttest](/documentation/testing/commenttest.png)
 
-### Pet app
+### Pet views
 
 The pet views were tested with various tests, such as if the user could create, update and delete pets, the unique constraint was tested, that the user had the correct amount of pets associated with them and more.
 
@@ -162,3 +173,24 @@ One particularly tricky test was the update pet test, it was supposed to give a 
 All tests can be found [here](/pets/tests.py)
 
 ![pettest](documentation/testing/testpetsview.png)
+
+## Ad views
+
+The ad views were tested with various tests, such as if the user could create, update and delete ads and only their own ads.
+The create test failed first due to not adding all required fields, once all were added the test passed.
+
+All tests can be found [here](/ads/tests.py)
+
+![adtest](documentation/testing/testadview.png)
+
+## Bugs
+
+### Ad
+
+The initial plan in the Ad model was to have Pets as a many-to-many relation pointing to pets to allow pet owners to connect their pets with the ad. This turned out to be somewhat of a headache as I only wanted the user to be able to choose from their pets and getting that HTML form input didn't support lists when I thought I solved it.
+It could maybe be dealt with on the front end but I did not want to leave any doubtful solutions hanging so I decided to find another solution.
+
+The main purpose what to let users filter ads on what type of pets it was, but that was solved by adding a pet attribute with choices instead.
+The pets belonging to the pet owner can still be found on their profile therefore I think it was an alright solution, as well as not getting any nulls if the ad is made by a pet sitter who doesn't have any pets, now the pet sitter can also specify what type of pets they are open to pet sit, making it easy to filter out all pet sitters who can pet sit dogs for an example.
+
+This solution also doesn't create any more tables in the database as the initial plan would, which is better for the performance of the database.
