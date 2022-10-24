@@ -3,11 +3,11 @@ from rest_framework import generics, permissions, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from pet_palace_api.permissions import IsOwnerOrReadOnly
 from .models import AppMessage
-from .serializers import AppMessageSerializer
+from app_messages import serializers
 
 
 class AppMessageList(generics.ListAPIView):
-    serializer_class = AppMessageSerializer
+    serializer_class = serializers.AppMessageSerializerList
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [
         DjangoFilterBackend,
@@ -26,10 +26,15 @@ class AppMessageList(generics.ListAPIView):
 
 
 class AppMessageCreate(generics.CreateAPIView):
-
-    serializer_class = AppMessageSerializer
+    serializer_class = serializers.AppMessageSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = AppMessage.objects.all()
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+class AppMessageDetail(generics.RetrieveDestroyAPIView):
+    serializer_class = serializers.AppMessageDetailSerializer
+    permission_classes = [IsOwnerOrReadOnly]
+    queryset = AppMessage.objects.all()
