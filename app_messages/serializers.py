@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import AppMessage
 
 
-class AppMessageSerializerList(serializers.ModelSerializer):
+class AppMessageSerializer(serializers.ModelSerializer):
     """
     Serializer class for AppMessages
     """
@@ -21,10 +21,12 @@ class AppMessageSerializerList(serializers.ModelSerializer):
 
     class Meta:
         model = AppMessage
-        fields = ['id', 'owner', 'reciver', 'is_owner', 'is_reciver', 'subject', 'sent']
+        fields = [
+            'id', 'owner', 'reciver', 'is_owner',
+            'is_reciver', 'subject', 'sent']
 
 
-class AppMessageSerializer(serializers.ModelSerializer):
+class CreateAppMessageSerializer(serializers.ModelSerializer):
     """
     Serializer class for AppMessages
     """
@@ -34,14 +36,3 @@ class AppMessageSerializer(serializers.ModelSerializer):
         model = AppMessage
         fields = '__all__'
 
-
-class AppMessageDetailSerializer(serializers.ModelSerializer):
-    """
-    Serializer class for AppMessages
-    """
-    owner = serializers.ReadOnlyField(source='owner.username')
-    reciver = serializers.ReadOnlyField(source='reciver.username')
-
-    class Meta:
-        model = AppMessage
-        fields = '__all__'

@@ -8,7 +8,7 @@ from app_messages import serializers
 
 
 class AppMessageList(generics.ListAPIView):
-    serializer_class = serializers.AppMessageSerializerList
+    serializer_class = serializers.AppMessageSerializer
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly]
     queryset = AppMessage.objects.all()
@@ -26,7 +26,7 @@ class AppMessageList(generics.ListAPIView):
 
 
 class AppMessageCreate(generics.CreateAPIView):
-    serializer_class = serializers.AppMessageSerializer
+    serializer_class = serializers.CreateAppMessageSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = AppMessage.objects.all()
 
@@ -35,7 +35,7 @@ class AppMessageCreate(generics.CreateAPIView):
 
 
 class AppMessageDetail(generics.RetrieveDestroyAPIView):
-    serializer_class = serializers.AppMessageDetailSerializer
+    serializer_class = serializers.AppMessageSerializer
     permission_classes = [IsOwnerOrReadOnly]
     queryset = AppMessage.objects.all()
     filter_backends = [IsMsgOwnerFilterBackend]
