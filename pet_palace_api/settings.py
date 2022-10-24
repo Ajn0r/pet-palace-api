@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'followers',
     'pets',
     'ads',
+    'app_messages',
 ]
 
 MIDDLEWARE = [
