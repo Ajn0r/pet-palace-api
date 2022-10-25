@@ -183,6 +183,16 @@ All tests can be found [here](/ads/tests.py)
 
 ![adtest](documentation/testing/testadview.png)
 
+## AppMessage views
+
+The AppMessage views were tested with various tests, such as if the user could send messages to other users, that the correct users were connected to the message, view the details of the message and if only the sender of the message could delete it.
+
+The create test failed first due to not adding the user's ID which was required and not only the username, once the id was added the test passed.
+
+All tests can be found [here](/app_messages/tests.py)
+
+![appmessagetest](documentation/testing/messageviewtests.png)
+
 ## Bugs
 
 ### Ad
