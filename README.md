@@ -89,6 +89,16 @@ The pet attribute is a multiple-choice where the user can specify what type of p
 
 The users can filter ads on pets, status, ad owners and the type of ad it is.
 
+## AppMessage App
+
+The AppMessage App lets Logged-in users send messages to each other that will contain a subject, the content of the message and the date and time when it was sent. The user can see all messages either sent by them or sent to them with the help of a custom filter, which also restricts other users from viewing any messages that are not sent to or from them.
+
+Updating the message is not possible since that would cause some confusion, the owner of the message can, however, delete it. I realise that it might not be the best solution for messages since the message will be deleted for both parties if the owner deletes it, it is however the only solution I could think of for the scope of the project as well as where my knowledge level is at the moment.
+
+With that in mind, I decided not to let the receiver of the message delete it, I am going to try to solve that on the front-end side instead. The app does also not contain any method for easy replying, I am hoping to solve this too on the front-end side.
+
+Even though there might be lacking some functionality to make it smoother, the main goal of the messaging app was to let users contact each other for setting up pet sittings. A future feature could be to add chat functionality with Django Channels, but for the scope of this project, I feel that the most important goal is met, which is that the user can send messages and only view the messages that belong to them.
+
 ## Setting up the project
 
 I have followed the Code Institutes template from the Django rest DRF_API walkthrough to set up the project with Django and Cloudinary.
@@ -204,3 +214,11 @@ The main purpose what to let users filter ads on what type of pets it was, but t
 The pets belonging to the pet owner can still be found on their profile therefore I think it was an alright solution, as well as not getting any nulls if the ad is made by a pet sitter who doesn't have any pets, now the pet sitter can also specify what type of pets they are open to pet sit, making it easy to filter out all pet sitters who can pet sit dogs for an example.
 
 This solution also doesn't create any more tables in the database as the initial plan would, which is better for the performance of the database.
+
+### AppMessage
+
+There were some issues when a user would try to log out when being on /messages/ after I filtered out the results for the owner and receiver, I got a TypeError that was solved by adding .id to the querysets in the filter.
+
+![typeerror](/documentation/bugs/typeerror.png)
+
+![solved](/documentation/bugs/queryfilter.png)
