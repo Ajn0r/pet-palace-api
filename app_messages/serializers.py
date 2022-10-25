@@ -23,7 +23,7 @@ class AppMessageSerializer(serializers.ModelSerializer):
         model = AppMessage
         fields = [
             'id', 'owner', 'reciver', 'is_owner',
-            'is_reciver', 'subject', 'sent']
+            'is_reciver', 'subject', 'sent', 'content']
 
 
 class CreateAppMessageSerializer(serializers.ModelSerializer):
@@ -35,4 +35,3 @@ class CreateAppMessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = AppMessage
         fields = '__all__'
-
