@@ -14,20 +14,20 @@ class InterestList(generics.ListCreateAPIView):
     serializer_class = AdInterestSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = AdInterest.objects.all()
-    filter_backends = [
-        filters.OrderingFilter,
-        DjangoFilterBackend]
-    filterset_fields = [
-        'ad__pets',
-        'ad__date_from',
-        'ad__location',
-        'ad__status',
-        'ad__owner__profile__owner',
-    ]
-    ordering_fields = [
-        'ad__date_from',
-        'ad__status'
-    ]
+    #filter_backends = [
+    #    filters.OrderingFilter,
+    #    DjangoFilterBackend]
+    #filterset_fields = [
+    #    'ad__pets',
+    #    'ad__date_from',
+    #    'ad__location',
+    #    'ad__status',
+    #    'ad__owner__profile__owner',
+    #]
+    #ordering_fields = [
+    #    'ad__date_from',
+    #    'ad__status'
+    #]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

@@ -11,7 +11,6 @@ class AdInterestSerializer(serializers.ModelSerializer):
     """
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
-    ad = serializers.ReadOnlyField(source='ad.title')
 
     def get_is_owner(self, obj):
         request = self.context['request']
