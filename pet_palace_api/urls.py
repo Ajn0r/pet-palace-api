@@ -14,5 +14,6 @@ urlpatterns = [
     path('', include('followers.urls')),
     path('', include('pets.urls')),
     path('', include('ads.urls')),
-    path('', include('app_messages.urls'))
+    path('', include('app_messages.urls')),
+    path('', include('ad_interest.urls')),
 ]
