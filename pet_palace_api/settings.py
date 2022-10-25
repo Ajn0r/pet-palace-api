@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'pets',
     'ads',
     'app_messages',
+    'ad_interest',
 ]
 
 MIDDLEWARE = [
