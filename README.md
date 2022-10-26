@@ -89,7 +89,7 @@ The pet attribute is a multiple-choice where the user can specify what type of p
 
 The users can filter ads on pets, status, ad owners and the type of ad it is.
 
-## Ad Interest App
+### Ad Interest App
 
 The code for the ad interest app comes from the Code Institute django rest walkthrough with minor alterations such as using UniqueConstraint instead of unique_toghether.
 
