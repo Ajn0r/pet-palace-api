@@ -89,7 +89,14 @@ The pet attribute is a multiple-choice where the user can specify what type of p
 
 The users can filter ads on pets, status, ad owners and the type of ad it is.
 
-## AppMessage App
+## Ad Interest App
+
+The code for the ad interest app comes from the Code Institute django rest walkthrough with minor alterations such as using UniqueConstraint instead of unique_toghether.
+
+It is very similar to the likes app and allows users to show interest in each other's ads.
+The user must be logged in to be able to add interest to an ad and can only delete the interests that they made, they can only show interest in a specific ad once.
+
+### AppMessage App
 
 The AppMessage App lets Logged-in users send messages to each other that will contain a subject, the content of the message and the date and time when it was sent. The user can see all messages either sent by them or sent to them with the help of a custom filter, which also restricts other users from viewing any messages that are not sent to or from them.
 
@@ -184,7 +191,7 @@ All tests can be found [here](/pets/tests.py)
 
 ![pettest](documentation/testing/testpetsview.png)
 
-## Ad views
+### Ad views
 
 The ad views were tested with various tests, such as if the user could create, update and delete ads and only their own ads.
 The create test failed first due to not adding all required fields, once all were added the test passed.
@@ -193,7 +200,16 @@ All tests can be found [here](/ads/tests.py)
 
 ![adtest](documentation/testing/testadview.png)
 
-## AppMessage views
+### AdInterest views
+
+The test for letting a user create and delete an interest first failed when having different owners, but passed if both the Ad and AdInterest owner were the same.
+There was no issue when testing manually so I decided to let it go, it might have something to do with the name 'owner' being the same for the different models but I am not sure.
+
+The tests did pass when owners were the same and the manual tests passed without any issues.
+
+![adinteresttest](documentation/testing/adinteresttest.png)
+
+### AppMessage views
 
 The AppMessage views were tested with various tests, such as if the user could send messages to other users, that the correct users were connected to the message, view the details of the message and if only the sender of the message could delete it.
 
