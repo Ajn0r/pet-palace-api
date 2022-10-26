@@ -15,6 +15,7 @@ class PetSittingSerializer(serializers.ModelSerializer):
     is_owner = serializers.SerializerMethodField()
     pets = PetSitPKField(many=True)
     is_petsitter = serializers.SerializerMethodField()
+    nr_of_pets_to_sit = serializers.ReadOnlyField()
 
     def get_is_owner(self, obj):
         request = self.context['request']
@@ -29,5 +30,5 @@ class PetSittingSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'owner', 'petsitter', 'is_owner', 'pets', 'description',
             'date_from', 'date_to', 'compensation', 'location', 'status',
-            'created_at', 'updated_at', 'is_petsitter'
+            'created_at', 'updated_at', 'is_petsitter', 'nr_of_pets_to_sit'
         ]
