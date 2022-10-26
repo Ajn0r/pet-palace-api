@@ -16,10 +16,6 @@ class AdInterestSerializer(serializers.ModelSerializer):
         request = self.context['request']
         return request.user == obj.owner
 
-    class Meta:
-        model = AdInterest
-        fields = ['id', 'owner', 'is_owner', 'ad', 'created_at']
-
     def create(self, validated_data):
         try:
             return super().create(validated_data)
@@ -27,3 +23,7 @@ class AdInterestSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({
                 'detail': 'possible duplicate'
             })
+
+    class Meta:
+        model = AdInterest
+        fields = ['id', 'owner', 'is_owner', 'ad', 'created_at']
