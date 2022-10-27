@@ -18,6 +18,10 @@ class Rating(models.Model):
 
     class Meta:
         ordering = ['-created_at']
+        constraints = [
+            models.UniqueConstraint(
+                fields=['owner', 'petsitting'], name='unique_rating')
+        ]
 
     def __str__(self):
         f"{self.owner}'s rating of {self.rated}"
