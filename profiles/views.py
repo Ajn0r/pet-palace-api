@@ -17,7 +17,10 @@ class ProfileList(generics.ListAPIView):
         followers_count=Count('owner__followed', distinct=True),
         following_count=Count('owner__following', distinct=True),
         nr_of_pets=Count('owner__pet_owner', distinct=True),
-        rating=Avg('owner__petsitter__petsitting_rating', distinct=True)
+        rating=Avg('owner__petsitter__petsitting_rating__rate', distinct=True),
+        nr_of_ratings=Count(
+            'owner__petsitter__petsitting_rating', distinct=True),
+        nr_of_sittings=Count('owner__petsitter', distinct=True),
     ).order_by('-created_at')
     serializer_class = ProfileSerializer
 
