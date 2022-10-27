@@ -67,16 +67,16 @@ It allows users to follow each other
 
 ![petmodel](documentation/models/petmodel.png)
 
-The pet model will contain information about the pet, such as name, what type of pet it is, how old it is, an image of the pet and a description where the owner can describe their pet and write some information that could be good for the potential pet sitter. The pet will be linked to the owner with a Foreign Key.
+The pet app will contain information about the pet, such as name, what type of pet it is, how old it is, an image of the pet and a description where the owner can describe their pet and write some information that could be good for the potential pet sitter. The pet will be linked to the owner with a Foreign Key.
 
 I considered adding a field for the breed as well but decided not to in this release, the motive being that I then wanted the user to be able to choose from a list of different breeds for each of the different types of pets. These lists would be massive and outside of the scope of this project, if I were to let the owner add it them self I could end up with many duplicates, for example, pug, pugs, pugg, and so on for every misspelling.
-It could be a feature for future releases since it would add value to the user to be able to filter for breeds as well, for this release, however, the user can put what type of breed it is in the description.
+It could be a feature for future releases since it would add value to the user to be able to filter for breeds as well, for this release, however, the owner can put what type of breed it is in the description and the user can then search for it.
 
 I considered making the name unique for the owner, but since a pet owner could have named their pets the same name, I decided to restrict the user from having pets with the same name born on the same day.
 While a pet owner could have two pets with the same name, it’s doubtful that they were born on the same day, it’s still not impossible, however, I choose to restrict it.
 If the user has two pets with the same name born on the same day, they will need to separate them not to confuse the other users and potential pet-sitter with some sort of uniqueness, for example, Molly1 & Molly2.
 
-There is a filter functionality for the different types of pets, and a search function for the owner's username or the pet's name.
+There is a filter functionality for the different types of pets, and a search function for the owner's username, the pet's name or for a word or sentence in the description.
 
 ### Ad app
 

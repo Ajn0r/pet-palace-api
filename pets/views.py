@@ -25,6 +25,7 @@ class PetList(generics.ListCreateAPIView):
     search_fields = [
         'name',
         'owner__username',
+        'description'
     ]
 
     def perform_create(self, serializer):
