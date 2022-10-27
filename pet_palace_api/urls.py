@@ -17,4 +17,5 @@ urlpatterns = [
     path('', include('app_messages.urls')),
     path('', include('ad_interest.urls')),
     path('', include('pet_sittings.urls')),
+    path('', include('ratings.urls')),
 ]

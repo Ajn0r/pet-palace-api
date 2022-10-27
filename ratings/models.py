@@ -9,8 +9,6 @@ class Rating(models.Model):
     """
     owner = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='rating_owner')
-    rated = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='rating_of_owner')
     petsitting = models.ForeignKey(
         PetSitting, on_delete=models.CASCADE, related_name='petsitting_rating')
     rate = models.PositiveSmallIntegerField()
