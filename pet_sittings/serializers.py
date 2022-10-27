@@ -4,6 +4,12 @@ from pets.models import Pet
 
 
 class PetSitPKField(serializers.PrimaryKeyRelatedField):
+    """
+    To only allow the owner to choose from
+    the pets that belong to them, code from
+    Xavier Ordoquy on medium.com, link can
+    be found in readme under credits.
+    """
     def get_queryset(self):
         user = self.context['request'].user
         queryset = Pet.objects.filter(owner=user)
@@ -11,6 +17,12 @@ class PetSitPKField(serializers.PrimaryKeyRelatedField):
 
 
 class PetSittingSerializer(serializers.ModelSerializer):
+    """
+    Serializer class for petsittings, solution
+    on how to limit data choises for pets is
+    from Xavier Ordoquy on medium.com, link can
+    be found in readme under credits.
+    """
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
     pets = PetSitPKField(many=True)

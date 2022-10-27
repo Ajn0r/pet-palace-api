@@ -108,8 +108,9 @@ Even though there might be lacking some functionality to make it smoother, the m
 
 ### Pet Sitting app
 
-The pet-sitting app acts like a contract between the pet owner and pet sitter, that owner can connect their pets to the pet-sitting to be able to track which user has pet-sat which pets. The pet-sitting model is very similar to the Ad except for the pets attribute, which is a many-to-many relationship with the Pet model. The field is allowed to be blank in case the user does not want to attach their pets to the pet sitting.
-The user can only choose from their pets and is allowed to connect more than one pet to the pet sitting.
+The pet-sitting app acts like a contract between the pet owner and pet sitter, that owner can connect their pets to the pet-sitting to be able to track which user pet-sat which pet or pets. The pet-sitting model is very similar to the Ad except for the pets attribute, which is a many-to-many relationship with the Pet model. The field is allowed to be blank in case the user does not want to attach their pets to the pet sitting.
+
+The user can only choose from their pets and is allowed to connect more than one pet to the pet sitting. When trying to limit the choices for pets in the ads app I had no luck, I did find a solution for this model and it is credited in both the code and readme under [Ads bug](#bugs) and [Credits](#credits).
 
 The owner of the pet sitting is allowed to update and delete it, if the pet sitter wants to change something they will have to send a message to the owner and request it, and if the owner agrees they can change or delete it.
 
@@ -230,17 +231,30 @@ All tests can be found [here](/app_messages/tests.py)
 
 ![appmessagetest](documentation/testing/messageviewtests.png)
 
+### PetSitting testing
+
+The PetSitting views were tested to make sure that users can view, create, update and delete pet sittings. The PetSittingTest's purpose was to test that users can view pet sittings, they can create pet sittings and owners can only choose from their pets to connect with the pet sitting.
+The PetSittingDetailTests were made to make sure that the detailed petsitting could be retrieved with the correct id and that users can edit and delete only the petsitting where they are the owner.
+
+I had some issues with assigning a pet to the petsitting at first but learned that it needs to be assinged with a .set() method instead, which solved the issue and the tests were successful.
+
+All tests can be found [here](/pet_sittings/tests.py)
+
+![petsittingtest](/documentation/testing/petsittingtests.png)
+
 ## Bugs
 
 ### Ad
 
 The initial plan in the Ad model was to have Pets as a many-to-many relation pointing to pets to allow pet owners to connect their pets with the ad. This turned out to be somewhat of a headache as I only wanted the user to be able to choose from their pets and getting that HTML form input didn't support lists when I thought I solved it.
-It could maybe be dealt with on the front end but I did not want to leave any doubtful solutions hanging so I decided to find another solution.
+Later when creating the pet-sitting app I found a solution to handle it, but decided to leave the ads model as it was due to the following reasons:
 
 The main purpose what to let users filter ads on what type of pets it was, but that was solved by adding a pet attribute with choices instead.
 The pets belonging to the pet owner can still be found on their profile therefore I think it was an alright solution, as well as not getting any nulls if the ad is made by a pet sitter who doesn't have any pets, now the pet sitter can also specify what type of pets they are open to pet sit, making it easy to filter out all pet sitters who can pet sit dogs for an example.
 
 This solution also doesn't create any more tables in the database as the initial plan would, which is better for the performance of the database.
+
+The solution for how to handle the many-to-many situation was found [here](https://medium.com/django-rest-framework/limit-related-data-choices-with-django-rest-framework-c54e96f5815e)
 
 ### AppMessage
 
@@ -249,3 +263,7 @@ There were some issues when a user would try to log out when being on /messages/
 ![typeerror](/documentation/bugs/typeerror.png)
 
 ![solved](/documentation/bugs/queryfilter.png)
+
+## Credits
+
+Xavier Ordoquy [solution on medium.com](https://medium.com/django-rest-framework/limit-related-data-choices-with-django-rest-framework-c54e96f5815e) on how to limit the related data choises with Django REST framework.
