@@ -21,6 +21,8 @@ class ProfileList(generics.ListAPIView):
         nr_of_ratings=Count(
             'owner__petsitter__petsitting_rating', distinct=True),
         nr_of_sittings=Count('owner__petsitter', distinct=True),
+        nr_of_msg_recived=Count('owner__message_reciver', distinct=True),
+        nr_of_msg_sent=Count('owner__sender', distinct=True)
     ).order_by('-created_at')
     serializer_class = ProfileSerializer
 
