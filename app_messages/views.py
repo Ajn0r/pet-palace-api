@@ -1,4 +1,3 @@
-from django.db.models import Q
 from rest_framework import generics, permissions, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from pet_palace_api.permissions import IsOwnerOrReadOnly
