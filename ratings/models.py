@@ -24,4 +24,4 @@ class Rating(models.Model):
         ]
 
     def __str__(self):
-        f"{self.owner}'s rating of {self.rated}"
+        return f"{self.owner}'s rating of {self.petsitting}"
