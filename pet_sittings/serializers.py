@@ -18,6 +18,11 @@ class PetSitPKField(serializers.PrimaryKeyRelatedField):
 
 
 class PetSitterPKField(serializers.PrimaryKeyRelatedField):
+    """
+    To only allow user to choose petsitter
+    that is not self or that has 'is_staff'
+    status. Inspired by the code above.
+    """
     def get_queryset(self):
         user = self.context['request'].user
         queryset = User.objects.all().exclude(
