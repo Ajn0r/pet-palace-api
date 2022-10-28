@@ -1,5 +1,13 @@
+from django.contrib.auth.models import User
 from rest_framework import serializers
 from .models import AppMessage
+
+
+class AppMessageReciverPKField(serializers.PrimaryKeyRelatedField):
+    def get_queryset(self):
+        user = self.context['request'].user
+        queryset = User.objects.all().order_by('followed')
+        return queryset
 
 
 class AppMessageSerializer(serializers.ModelSerializer):
@@ -31,6 +39,7 @@ class CreateAppMessageSerializer(serializers.ModelSerializer):
     Serializer class for AppMessages
     """
     owner = serializers.ReadOnlyField(source='owner.username')
+    reciver = AppMessageReciverPKField()
 
     class Meta:
         model = AppMessage

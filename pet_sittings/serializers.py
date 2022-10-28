@@ -27,7 +27,7 @@ class PetSitterPKField(serializers.PrimaryKeyRelatedField):
         user = self.context['request'].user
         queryset = User.objects.all().exclude(
             is_staff=True).exclude(
-                username=user.username)
+                username=user.username).order_by('followed')
         return queryset
 
 
