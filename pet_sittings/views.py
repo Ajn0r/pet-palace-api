@@ -34,7 +34,6 @@ class PetSittingList(generics.ListCreateAPIView):
         'pets__name',
         'location',
         'description'
-
     ]
 
     def perform_create(self, serializer):
