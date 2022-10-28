@@ -106,13 +106,19 @@ With that in mind, I decided not to let the receiver of the message delete it, I
 
 Even though there might be lacking some functionality to make it smoother, the main goal of the messaging app was to let users contact each other for setting up pet sittings. A future feature could be to add chat functionality with Django Channels, but for the scope of this project, I feel that the most important goal is met, which is that the user can send messages and only view the messages that belong to them.
 
+The receiver field is ordered so that users that the owner is following will be displayed first.
+
 ### Pet Sitting app
 
 The pet-sitting app acts like a contract between the pet owner and pet sitter, that owner can connect their pets to the pet-sitting to be able to track which user pet sat which pet or pets. The pet-sitting model is very similar to the Ad except for the pets attribute, which is a many-to-many relationship with the Pet model. The field is allowed to be blank in case the user does not want to attach their pets to the pet sitting.
 
-The user can only choose from their pets and is allowed to connect more than one pet to the pet sitting. When trying to limit the choices for pets in the ads app I had no luck, I did find a solution for this model and it is credited in both the code and readme under [Ads bug](#bugs) and [Credits](#credits).
+The user can only choose from their pets and is allowed to connect more than one pet to the pet sitting. When trying to limit the choices for pets in the ads app I had no luck, I did find a solution for this model and it is credited in both the code and readme under [Ads bug](#bugs) and [Credits](#credits). When choosing a petsitter the users are ordered by the profiles that the owner follows, the owner can not choose from users that have staff status or themselves.
 
 The owner of the pet sitting is allowed to update and delete it, if the pet sitter wants to change something they will have to send a message to the owner and request it, and if the owner agrees they can change or delete it.
+
+If the petsitter deletes their account, which can only be done by contacting admin, the petsitter foreign key value will be set to a "Deleted" user. Otherwise, all the pet sittings for the owner that are connected to that pet sitter will be deleted which would be unfortunate.
+It was difficult deciding what would be the best solution, CASCADE or SET since the petsitting is the petsitter's form of the contract it's of value for them to save the information. However if the petsitting is not connected to a real user it loses a bit of its purpose, but to add some sort of control I decided to assign it to the 'fake' deleted user.
+The admin could then send a message to the petsitting owner and inform them that the petsitter had deleted their account and let them decide if they want to keep them or not. If a pet owner has many petsitting by the same user they would otherwise lose all of that data which of course is not ideal, the downside of the solution is that the data stored takes up space in the database.
 
 The user can filter, order and search on the pet-sitting list view, they can filter by owner, pets, petsitter and status, order by dates to, from and created at and the status. The search filter takes the pet's name and location, the user can also search for words or sentences in the description.
 
@@ -263,6 +269,17 @@ There were some issues when a user would try to log out when being on /messages/
 ![typeerror](/documentation/bugs/typeerror.png)
 
 ![solved](/documentation/bugs/queryfilter.png)
+
+### PetSittings
+
+I had set on_delete to SET('delete') on the petsitter foreign key since I wanted the petsitting to still exist even if the petsitter was deleted, however, this was not configured correctly and therefore it didn't allow the deletion of a user.
+I found a solution where a user with the username 'deleted' was created and all the pet sittings whose petsitter was deleted would be set to that user instead.
+
+Solution was inspired by [this code](https://django.fun/en/qa/426873/)
+
+### Ratings
+
+I forgot to update the `__str__` function after I removed the foreign key to the rated user, so when trying to access ratings in the admin panel it threw an error, but that was a quick fix.
 
 ## Credits
 
