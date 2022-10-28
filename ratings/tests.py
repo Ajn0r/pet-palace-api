@@ -56,7 +56,7 @@ class RatingListTest(APITestCase):
         self.assertEqual(response1.data['rate'], 4)
         self.assertEqual(response2.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_user_can_only_create_if_they_are_petsitting_owner(self):
+    def test_user_can_only_create_rating_if_they_are_petsitting_owner(self):
         dere = self.client.login(username='dere', password='pass')
         ere = User.objects.get(username='ere')
         petsitting = PetSitting.objects.get(owner=ere).id
