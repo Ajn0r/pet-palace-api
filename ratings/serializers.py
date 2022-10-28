@@ -7,7 +7,8 @@ from pet_sittings.models import PetSitting
 class PetSitChoisePKField(serializers.PrimaryKeyRelatedField):
     def get_queryset(self):
         user = self.context['request'].user
-        queryset = PetSitting.objects.filter(owner=user)
+        queryset = PetSitting.objects.filter(
+            owner=user).filter(status=2).order_by('-date_to')
         return queryset
 
 
