@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from rest_framework import serializers
 from .models import PetSitting
 from pets.models import Pet
@@ -12,7 +13,16 @@ class PetSitPKField(serializers.PrimaryKeyRelatedField):
     """
     def get_queryset(self):
         user = self.context['request'].user
-        queryset = Pet.objects.filter(owner=user)
+        queryset = Pet.objects.filter(owner=user).exclude(owner__is_staff=True)
+        return queryset
+
+
+class PetSitterPKField(serializers.PrimaryKeyRelatedField):
+    def get_queryset(self):
+        user = self.context['request'].user
+        queryset = User.objects.all().exclude(
+            is_staff=True).exclude(
+                username=user.username)
         return queryset
 
 
@@ -26,6 +36,7 @@ class PetSittingSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
     pets = PetSitPKField(many=True)
+    petsitter = PetSitterPKField()
     is_petsitter = serializers.SerializerMethodField()
     nr_of_pets_to_sit = serializers.ReadOnlyField()
 

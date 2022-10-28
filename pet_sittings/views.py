@@ -4,7 +4,6 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .models import PetSitting
 from .serializers import PetSittingSerializer
 from pet_palace_api.permissions import IsOwnerOrReadOnly
-from pet_palace_api.filters import IsMsgOwnerFilterBackend
 
 
 class PetSittingList(generics.ListCreateAPIView):
@@ -22,7 +21,8 @@ class PetSittingList(generics.ListCreateAPIView):
         'owner',
         'pets',
         'petsitter',
-        'status'
+        'status',
+        'owner__profile'
     ]
     ordering_fields = [
         'date_from',
