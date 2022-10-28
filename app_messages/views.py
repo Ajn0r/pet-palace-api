@@ -18,9 +18,12 @@ class AppMessageList(generics.ListAPIView):
         ]
     filterset_fields = [
         'owner',
+        'reciver'
     ]
     search_fields = [
-        'subject'
+        'subject',
+        'reciver__username',
+        'owner__username'
     ]
 
 

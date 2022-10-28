@@ -4,6 +4,11 @@ from .models import AppMessage
 
 
 class AppMessageReciverPKField(serializers.PrimaryKeyRelatedField):
+    """
+    Class to order the reciver choise to
+    show all users that the sender is following
+    first
+    """
     def get_queryset(self):
         user = self.context['request'].user
         queryset = User.objects.all().order_by('followed')
