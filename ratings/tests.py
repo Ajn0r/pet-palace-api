@@ -18,7 +18,7 @@ class RatingListTest(APITestCase):
                 owner=ere, petsitter=dere,
                 compensation='400', location='Stockholm',
                 date_from='2023-01-20', date_to='2023-01-24',
-                description='A pet-sitting'
+                description='A pet-sitting', status=2
         )
         kitty = Pet.objects.create(
                 owner=ere, date_of_birth='2020-02-20', name='Kitty'

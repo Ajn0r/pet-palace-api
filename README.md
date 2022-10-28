@@ -124,6 +124,14 @@ The user can filter, order and search on the pet-sitting list view, they can fil
 
 It would be nice to have a functionality where the pet-sitting is only created if both parties accept the pet-sitting, but that is beyond the scope of this project and my knowledge at the time, there might be some way of implementing this on the front-end side however that is for future endeavours with React.
 
+### Rating app
+
+The rating app allows the petsitting owner to rate the petsitting. The rating is connected with the petsitting using a foreign key and on the profile of the user that pet sat the average rating score will be displayed using Avg in the .annotate function on the query set.
+
+The user can rate anywhere from 1 to 5 and leave a comment for the rating. The rating needs to be linked to a pet sitting to prevent users to rate other users without having done a pet sitting for them, the owner can also only rate a pet sitting once. The list of the petsittings to rate only displays sittings that have the status of finished and are ordered by date_to, making the newest finished petsitting on top.
+
+I first had a field 'rated' that was a foreign key to the user that was to be rated but found out I could connect it to the petsitter via the petsitting attribute instead.
+
 ## Setting up the project
 
 I have followed the Code Institutes template from the Django rest DRF_API walkthrough to set up the project with Django and Cloudinary.
@@ -242,11 +250,27 @@ All tests can be found [here](/app_messages/tests.py)
 The PetSitting views were tested to make sure that users can view, create, update and delete pet sittings. The PetSittingTest's purpose was to test that users can view pet sittings, they can create pet sittings and owners can only choose from their pets to connect with the pet sitting.
 The PetSittingDetailTests were made to make sure that the detailed petsitting could be retrieved with the correct id and that users can edit and delete only the petsitting where they are the owner.
 
-I had some issues with assigning a pet to the petsitting at first but learned that it needs to be assinged with a .set() method instead, which solved the issue and the tests were successful.
+I had some issues with assigning a pet to the petsitting at first but learned that it needs to be assigned with a .set() method instead, which solved the issue and the tests were successful.
 
 All tests can be found [here](/pet_sittings/tests.py)
 
 ![petsittingtest](/documentation/testing/petsittingtests.png)
+
+### Rating view tests
+
+The rating views were tested with various tests to make sure users can view, create, update and delete ratings.
+The List/Create view was tested to make sure that users can only create ratings if they are logged in and are the owner of the petsitting to be rated and that they only can create one rating per petsitting.
+
+The rating detail view that lets users update and delete ratings were tested to confirm that ratings can be retrieved with the correct id, and only can be updated and deleted by the rating owner.
+All tests passed without issues.
+
+All tests can be found [here](/ratings/tests.py)
+
+![ratingstests](documentation/testing/testratings.png)
+
+When all tests were done I did a test on them all at the same time, and the first two tests from the rating tests failed, due to that I had set that a user can only rate petsitting with the status of finished, and the testcase petsitting had the status of 'planned'. Once I added status=2 to the tests they all passed.
+
+![alltests](documentation/testing/alltests.png)
 
 ## Bugs
 
@@ -278,6 +302,8 @@ I found a solution where a user with the username 'deleted' was created and all 
 Solution was inspired by [this code](https://django.fun/en/qa/426873/)
 
 ### Ratings
+
+I first had a rated attribute which was a foreign key to the User model to connect the user that was rated with the rating, this was however not necessary since it could be reached through the petsitting attribute instead. When trying to remove this with ratings already in the test database it caused some issues, I couldn't reach the admin page to remove them and I couldn't migrate either, the solution was to delete the migrations and start over, remove the ratings and then do it all again. It was a small bug that was quickly resolved.
 
 I forgot to update the `__str__` function after I removed the foreign key to the rated user, so when trying to access ratings in the admin panel it threw an error, but that was a quick fix.
 
