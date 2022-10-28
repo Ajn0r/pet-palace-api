@@ -1,3 +1,5 @@
 from django.contrib import admin
+from ad_interest.models import AdInterest
 
-# Register your models here.
+
+admin.site.register(AdInterest)

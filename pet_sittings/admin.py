@@ -1,3 +1,5 @@
 from django.contrib import admin
+from pet_sittings.models import PetSitting
 
-# Register your models here.
+
+admin.site.register(PetSitting)
