@@ -4,7 +4,7 @@ from .models import PetSitting
 from pets.models import Pet
 
 
-class PetSitPKField(serializers.PrimaryKeyRelatedField):
+class PetToSitPKField(serializers.PrimaryKeyRelatedField):
     """
     To only allow the owner to choose from
     the pets that belong to them, code from
