@@ -13,13 +13,13 @@ Once that was finished a more detailed logical database model was made with all 
 
 ![logical](/documentation/models/petpalacelogicalmodel.png)
 
-The scope of the database is quite wide to take into consideration that the project might grow in the future, leaving room for future features that might not be implemented in the first release.
-
 ## Apps
 
 The Pet Palace API has got # nr of apps, the different apps and their purpose is described as follows:
 
 ### Profile app
+
+![profilesmodel](/documentation/models/profilemodel.png)
 
 An app for the user's profile, the profile is created automatically when they sign up and create a user, the profile can only be edited, it is not possible to delete it, and the user can also only have one profile. There is also some functionality to count the number of followings and followers.
 
@@ -34,6 +34,8 @@ If the user checks the pet owner box, they will get a small icon next to their n
 
 ### Post app
 
+![postssmodel](/documentation/models/postmodel.png)
+
 The code for the Post app is greatly inspired by the Code Institute django rest framework walkthrough, with minor alterations to fit my project.
 
 All logged-in users will be able to create, update and delete a post.
@@ -46,6 +48,8 @@ There is some filter and search functionality as well as some functionality to c
 
 ### Comment app
 
+![commentssmodel](/documentation/models/commentmodel.png)
+
 The code for the comment app comes from the Code Institute django rest walkthrough with minor alterations and some added testing.
 It allows users to comment on each other's posts and the user can view, update and delete comments.
 
@@ -53,11 +57,15 @@ The user must be logged in to be able to comment and can only edit and delete th
 
 ### Like app
 
+![likesmodel](/documentation/models/likemodel.png)
+
 The code for the like app comes from the Code Institute django rest walkthrough with minor alterations such as using UniqueConstraint instead of unique_toghether.
 
 It allows users to like each other's posts as well as view and delete the likes, the user must be logged in to be able to like a post and can only delete the likes that they made, they can only like a post once.
 
 ### Follower app
+
+![followerssmodel](/documentation/models/followermodel.png)
 
 The code for the follower app comes from the Code Institute django rest walkthrough with minor alterations such as using UniqueConstraint instead of unique_toghether.
 
@@ -80,6 +88,8 @@ There is a filter functionality for the different types of pets, and a search fu
 
 ### Ad app
 
+![adsmodel](/documentation/models/admodel.png)
+
 The Ad app is of use for both pet owners and pet sitters, they can both make ads depending on if they require a pet sitter, or is available for pet sittings. The ad contains a title, description, image, dates from and to, compensation, location, status, pets, type and dates of creation and updating.
 
 The compensation is a Charfield to give the user a bit more freedom to choose what type of compensation that will be given or wanted, the image field allows the user to add an image of either their pets or themselves, the latter mainly for pet-sitters.
@@ -91,12 +101,16 @@ The users can filter ads on pets, status, ad owners and the type of ad it is.
 
 ### Ad Interest App
 
+![adsinterestsmodel](/documentation/models/interestmodel.png)
+
 The code for the ad interest app comes from the Code Institute django rest walkthrough with minor alterations such as using UniqueConstraint instead of unique_toghether.
 
 It is very similar to the likes app and allows users to show interest in each other's ads.
 The user must be logged in to be able to add interest to an ad and can only delete the interests that they made, they can only show interest in a specific ad once.
 
 ### AppMessage App
+
+![appmessagesmodel](/documentation/models/messagemodel.png)
 
 The AppMessage App lets Logged-in users send messages to each other that will contain a subject, the content of the message and the date and time when it was sent. The user can see all messages either sent by them or sent to them with the help of a custom filter, which also restricts other users from viewing any messages that are not sent to or from them.
 
@@ -109,6 +123,8 @@ Even though there might be lacking some functionality to make it smoother, the m
 The receiver field is ordered so that users that the owner is following will be displayed first.
 
 ### Pet Sitting app
+
+![petsittingssmodel](/documentation/models/petsittingmodel.png)
 
 The pet-sitting app acts like a contract between the pet owner and pet sitter, that owner can connect their pets to the pet-sitting to be able to track which user pet sat which pet or pets. The pet-sitting model is very similar to the Ad except for the pets attribute, which is a many-to-many relationship with the Pet model. The field is allowed to be blank in case the user does not want to attach their pets to the pet sitting.
 
@@ -125,6 +141,8 @@ The user can filter, order and search on the pet-sitting list view, they can fil
 It would be nice to have a functionality where the pet-sitting is only created if both parties accept the pet-sitting, but that is beyond the scope of this project and my knowledge at the time, there might be some way of implementing this on the front-end side however that is for future endeavours with React.
 
 ### Rating app
+
+![ratingsmodel](/documentation/models/ratingmodel.png)
 
 The rating app allows the petsitting owner to rate the petsitting. The rating is connected with the petsitting using a foreign key and on the profile of the user that pet sat the average rating score will be displayed using Avg in the .annotate function on the query set.
 
