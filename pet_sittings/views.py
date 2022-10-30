@@ -9,7 +9,7 @@ from pet_palace_api.permissions import IsOwnerOrReadOnly
 class PetSittingList(generics.ListCreateAPIView):
     queryset = PetSitting.objects.annotate(
         nr_of_pets_to_sit=Count('pets')
-    )
+    ).order_by('status', 'date_from')
     serializer_class = PetSittingSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [
