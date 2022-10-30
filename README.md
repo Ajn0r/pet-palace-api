@@ -15,7 +15,7 @@ Once that was finished a more detailed logical database model was made with all 
 
 ## Apps
 
-The Pet Palace API has got # nr of apps, the different apps and their purpose is described as follows:
+The Pet Palace API has got 11 apps, the different apps and their purpose are described here:
 
 ### Profile app
 
@@ -116,7 +116,7 @@ The AppMessage App lets Logged-in users send messages to each other that will co
 
 Updating the message is not possible since that would cause some confusion, the owner of the message can, however, delete it. I realise that it might not be the best solution for messages since the message will be deleted for both parties if the owner deletes it, it is however the only solution I could think of for the scope of the project as well as where my knowledge level is at the moment.
 
-With that in mind, I decided not to let the receiver of the message delete it, I am going to try to solve that on the front-end side instead. The app does also not contain any method for easy replying, I am hoping to solve this too on the front-end side.
+With that in mind, I decided not to let the receiver of the message delete it, I am going to try to solve that on the front-end side instead. The app does also not contain any method for easy replying, I am hoping to solve this too on the front-end side. I believe it needs to be another model for replies to connect them to the message that the user is replying to otherwise, which is outside this project's scope.
 
 Even though there might be lacking some functionality to make it smoother, the main goal of the messaging app was to let users contact each other for setting up pet sittings. A future feature could be to add chat functionality with Django Channels, but for the scope of this project, I feel that the most important goal is met, which is that the user can send messages and only view the messages that belong to them.
 
@@ -327,4 +327,6 @@ I forgot to update the `__str__` function after I removed the foreign key to the
 
 ## Credits
 
-Xavier Ordoquy's [solution on medium.com](https://medium.com/django-rest-framework/limit-related-data-choices-with-django-rest-framework-c54e96f5815e) on how to limit the related data choises with Django REST framework.
+- Code Institute's Django REST Framework walkthrough project which I have followed for setting up this project, deployment and also for the first apps: profiles, posts, comments, likes and followers. The walkthrough has inspired the base of the rest of the apps and their functionality as well.
+
+- Xavier Ordoquy's [solution on medium.com](https://medium.com/django-rest-framework/limit-related-data-choices-with-django-rest-framework-c54e96f5815e) on how to limit the related data choises with Django REST framework.
