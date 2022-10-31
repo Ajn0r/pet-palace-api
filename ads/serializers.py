@@ -3,6 +3,18 @@ from rest_framework import serializers
 from .models import Ad
 
 
+def future_date_validation(value):
+    """
+    Function to make sure that the start date
+    is in the future.
+    """
+    today = date.today()
+    if value < today:
+        raise serializers.ValidationError(
+            "The start date needs to be in the future")
+        return value
+
+
 class AdSerializer(serializers.ModelSerializer):
     """
     Serializer class for ads
@@ -12,6 +24,17 @@ class AdSerializer(serializers.ModelSerializer):
     pets = serializers.MultipleChoiceField(
         choices=Ad.PET_CHOISE_AD).choice_strings_to_values
     nr_of_interest = serializers.ReadOnlyField()
+    date_from = serializers.DateField(validators=[future_date_validation])
+    date_to = serializers.DateField()
+
+    def validate(self, data):
+        """
+        Check that date_from is before date_to.
+        """
+        if data['date_from'] > data['date_to']:
+            raise serializers.ValidationError(
+                "The end date must be before the start date")
+        return data
 
     def get_is_owner(self, obj):
         request = self.context['request']
