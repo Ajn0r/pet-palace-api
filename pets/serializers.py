@@ -1,4 +1,5 @@
 from django.db import IntegrityError
+from datetime import date
 from rest_framework import serializers
 from .models import Pet
 
@@ -12,10 +13,30 @@ class PetSerializer(serializers.ModelSerializer):
     """
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
+    age = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
         request = self.context['request']
         return request.user == obj.owner
+
+    def get_age(self, obj):
+        """
+        Function to get the pets age
+        Code inspired by Danny W. Adair code from
+        stackoverflow, credits in the readme.
+        """
+        today = date.today()
+        dob = obj.date_of_birth
+        years = today.year - dob.year - (
+            (today.month, today.day) < (dob.month, dob.day))
+        months = today.month - dob.month
+        days = today.day - dob.day
+        if (today.month < dob.month):
+            return f"{years} Years, {12+months} months"
+        elif (months == 0):
+            return f"{days} Days"
+        else:
+            return f"{years} Years, {months} months"
 
     def create(self, validated_data):
         try:
@@ -32,5 +53,6 @@ class PetSerializer(serializers.ModelSerializer):
         model = Pet
         fields = [
             'id', 'owner', 'name', 'description', 'image', 'type',
-            'created_at', 'updated_at', 'is_owner', 'date_of_birth'
+            'created_at', 'updated_at', 'is_owner', 'date_of_birth',
+            'age'
         ]

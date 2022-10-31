@@ -19,6 +19,7 @@ class PetList(generics.ListCreateAPIView):
 
     filterset_fields = [
         'type',
+        'owner__followed__owner__profile'
     ]
 
     search_fields = [
