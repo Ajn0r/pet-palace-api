@@ -101,6 +101,12 @@ When all tests were done I did a test on them all at the same time, and the firs
 
 Manual tests were made for all apps throughout the whole development process and after the first deployment, the last tests were carried out before moving on to the front-end project.
 
+### URLs
+
+URLs were tested throughout the development process and once deployed both the development and deployed version URLs were tested to make sure they worked in both. All URLs worked as intended.
+
+![urltesting](documentation/testing/urlmanualtests.png)
+
 ## Validation
 
 Validation was carried out for all files in all apps with the PEP8 validator pycodestyle in the Gitpod workspace. There were only some minor issues with whitespace and new lines missing at the end of the code which was easily fixed. In the settings.py file, five lines were too long, however, these were ignored by adding `# noqa` to the end of the lines since they were easily understood anyway and I felt like breaking it up might make it harder to understand, it was the 'auth passwords validators' and 'rest auth serializer' setting lines.
