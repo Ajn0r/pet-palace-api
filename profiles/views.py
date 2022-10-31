@@ -1,4 +1,5 @@
 from django.db.models import Count, Avg
+from django.contrib.auth.models import User
 from rest_framework import generics, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Profile
@@ -23,11 +24,12 @@ class ProfileList(generics.ListAPIView):
         nr_of_sittings=Count('owner__petsitter', distinct=True),
         nr_of_msg_recived=Count('owner__message_reciver', distinct=True),
         nr_of_msg_sent=Count('owner__sender', distinct=True)
-    ).order_by('-created_at')
+    ).order_by('-created_at').exclude(owner__is_staff=True)
     serializer_class = ProfileSerializer
 
     filter_backends = [
         filters.OrderingFilter,
+        filters.SearchFilter,
         DjangoFilterBackend
     ]
 
@@ -37,10 +39,17 @@ class ProfileList(generics.ListAPIView):
         'followers_count',
         'owner__following__created_at',
         'owner__followed__created_at',
+        'rating'
     ]
 
     filterset_fields = [
-        'owner__following__followed__profile'
+        'owner__following__followed__profile',
+        'owner__pet_owner__type',
+        'type',
+    ]
+
+    search_fields = [
+        'owner__username'
     ]
 
 
