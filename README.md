@@ -325,6 +325,14 @@ I found a solution where a user with the username 'deleted' was created and all 
 
 Solution was inspired by [this code](https://django.fun/en/qa/426873/)
 
+### Pets
+
+On the pets list, the pet owner wasn't displaying due to the source being not correct, it was resolved by adding the source 'owner.username' to the serializer.
+
+### Posts
+
+Comment count and likes count were correctly set up in the view but I had forgotten to set them in the serializer, therefore it didn't display those values. Once added in the serializer the values could be viewed on the posts.
+
 ### Ratings
 
 I first had a rated attribute which was a foreign key to the User model to connect the user that was rated with the rating, this was however not necessary since it could be reached through the petsitting attribute instead. When trying to remove this with ratings already in the test database it caused some issues, I couldn't reach the admin page to remove them and I couldn't migrate either, the solution was to delete the migrations and start over, remove the ratings and then do it all again. It was a small bug that was quickly resolved.
@@ -336,3 +344,5 @@ I forgot to update the `__str__` function after I removed the foreign key to the
 - Code Institute's Django REST Framework walkthrough project which I have followed for setting up this project, deployment and also for the first apps: profiles, posts, comments, likes and followers. The walkthrough has inspired the base of the rest of the apps and their functionality as well.
 
 - Xavier Ordoquy's [solution on medium.com](https://medium.com/django-rest-framework/limit-related-data-choices-with-django-rest-framework-c54e96f5815e) on how to limit the related data choises with Django REST framework.
+
+- Code to calculate the age of the pets is inspired by Danny W. Adair's [solution on stackoverflow](https://stackoverflow.com/questions/2217488/age-from-birthdate-in-python)
