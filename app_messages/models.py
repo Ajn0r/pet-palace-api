@@ -18,4 +18,4 @@ class AppMessage(models.Model):
         ordering = ['-sent']
 
     def __str__(self):
-        return f"Message from {self.owner} to {self.reciver}"
+        return f"Message from {self.owner}"

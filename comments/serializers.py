@@ -26,7 +26,7 @@ class CommentSerializer(serializers.ModelSerializer):
             'id', 'owner', 'is_owner', 'profile_id', 'profile_image',
             'post', 'content', 'created_at', 'updated_at',
         ]
-        
+
     def get_created_at(self, obj):
         return naturaltime(obj.created_at)
 

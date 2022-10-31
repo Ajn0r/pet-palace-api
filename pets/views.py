@@ -12,7 +12,6 @@ class PetList(generics.ListCreateAPIView):
     """
     serializer_class = PetSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    # add love and add count later
     queryset = Pet.objects.all()
     filter_backends = [
         DjangoFilterBackend,

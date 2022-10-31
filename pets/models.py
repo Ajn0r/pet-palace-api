@@ -31,7 +31,7 @@ class Pet(models.Model):
 
     class Meta:
         """
-        Meta class for ordering and 
+        Meta class for ordering and
         adding constraint, not allowing a
         owner to have a pet with the same name born
         on the same date.
