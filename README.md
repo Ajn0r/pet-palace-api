@@ -195,6 +195,12 @@ DEFAULT_FILE_STORAGE =
 
 Now the basic project was finished, the next step were to start setting up all the apps and adding them to the settings.py file.
 
+## Validation
+
+Validation was carried out for all files in all apps with the PEP8 validator pycodestyle in the Gitpod workspace. There were only some minor issues with whitespace and new lines missing at the end of the code which was easily fixed. In the settings.py file, five lines were too long, however, these were ignored by adding `# noqa` to the end of the lines since they were easily understood anyway and I felt like breaking it up might make it harder to understand, it was the 'auth passwords validators' and 'rest auth serializer' setting lines.
+
+![validation](/documentation/testing/validations.png)
+
 ## Testing
 
 ### Profile views
