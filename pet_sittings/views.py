@@ -22,7 +22,6 @@ class PetSittingList(generics.ListCreateAPIView):
         'pets',
         'petsitter',
         'status',
-        'owner__profile'
     ]
     ordering_fields = [
         'date_from',

@@ -44,6 +44,17 @@ class PetSittingSerializer(serializers.ModelSerializer):
     petsitter = PetSitterPKField()
     is_petsitter = serializers.SerializerMethodField()
     nr_of_pets_to_sit = serializers.ReadOnlyField()
+    date_from = serializers.DateField()
+    date_to = serializers.DateField()
+
+    def validate(self, data):
+        """
+        Check that date_from is before date_to.
+        """
+        if data['date_from'] > data['date_to']:
+            raise serializers.ValidationError(
+                "The end date must be before the start date")
+        return data
 
     def get_is_owner(self, obj):
         request = self.context['request']
