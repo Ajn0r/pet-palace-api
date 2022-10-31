@@ -22,7 +22,7 @@ class InterestList(generics.ListCreateAPIView):
         'ad__date_from',
         'ad__location',
         'ad__status',
-        'ad__owner__profile__owner',
+        'ad__owner',
     ]
     ordering_fields = [
         'ad__date_from',
