@@ -100,6 +100,12 @@ When all tests were done I did a test on them all at the same time, and the firs
 ## Manual testing
 
 Manual tests were made for all apps throughout the whole development process and after the first deployment, the last tests were carried out before moving on to the front-end project.
+111 different manual tests were made for both apps and URLs.
+Some of the tests did test for the same thing as the unit tests but there were also some for testing filters, error messages and correct values being displayed.
+
+While testing I found some small things I missed or that were not thought of during the development process such as users being allowed to have an end date before the start date on both petsittings and ads. This was dealt with, as well as other small issues such as the source for the owner being incorrect and some values missing in the serializer.
+
+![allmanualtest](/documentation/testing/allmanualtests.png)
 
 ### URLs
 
