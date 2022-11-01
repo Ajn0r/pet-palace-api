@@ -19,7 +19,7 @@ class AdSerializer(serializers.ModelSerializer):
     """
     Serializer class for ads
     """
-    owner = serializers.ReadOnlyField(source='ad_owner.username')
+    owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
     pets = serializers.MultipleChoiceField(
         choices=Ad.PET_CHOISE_AD).choice_strings_to_values
