@@ -230,7 +230,7 @@ I used the Code Institute Django REST framework project cheat sheet for the depl
 
 4. Migrated the database using the terminal command `python3 manage.py migrate`
 
-5. To allow users to register installed Django Allauth with command
+5. To allow users to register installed Django Allauth with the command
 
     `pip3 install 'dj-rest-auth[with_social]’`
 
@@ -330,6 +330,324 @@ These were added to the settings.py file:
     git commit -m "message"
     git push
     ```
+
+## Prepare the API for deployment to Heroku
+
+18. To add a custom welcome message to the root_route, I created a views.py file in the pet_palace_api directory and added the following code:
+
+    ```bash
+    from rest_framework.decorators import api_view
+    from rest_framework.response import Response
+
+
+    @api_view()
+    def root_route(request):
+        return Response({
+            'message': 'Welcome to the Pet Palace API!'
+        })
+    ```
+
+19. Imported root_route to the main urls.py file, and added the path to the top of the urlpatterns list
+
+    ```bash
+    from .views import root_route
+
+    urlpatterns = [
+        path('', root_route),
+
+    ```
+
+20. To set up pagination for all pages, added this code to settings.py REST_FRAMEWORK setting
+
+    ```bash
+    REST_FRAMEWORK = {
+        'DEFAULT_AUTHENTICATION_CLASSES': [(
+            'rest_framework.authentication.SessionAuthentication'
+            if 'DEV' in os.environ
+            else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
+        )],
+        'DEFAULT_PAGINATION_CLASS':
+        'rest_framework.pagination.PageNumberPagination',
+        'PAGE_SIZE': 10,
+    }
+    ```
+
+21. Set the default renderer to JSON if not in development, in settings.py added:
+
+    ```bash
+    if 'DEV' not in os.environ:
+        REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
+            'rest_framework.renderers.JSONRenderer',
+        ]
+    ```
+
+22. To set up DATETIME_FORMAT and DATE_FORMAT this code was added to REST_FRAMEWORK in settings.py under pagination code
+
+    ```bash
+        'DATETIME_FORMAT': '%d %b %Y',
+        'DATE_FORMAT': '%d %b %Y',
+    ```
+
+23. Add naturaltime format to show how long ago since a comment was created and updated for comments. Added the following code to CommentSerializer in the serializers.py file:
+
+    ```bash
+    from django.contrib.humanize.templatetags.humanize import naturaltime
+
+        created_at = serializers.SerializerMethodField()
+        updated_at = serializers.SerializerMethodField()
+
+        def get_created_at(self, obj):
+            return naturaltime(obj.created_at)
+
+        def get_updated_at(self, obj):
+            return naturaltime(obj.updated_at)
+
+    ```
+
+24. Added, committed and pushed changes to GitHub
+
+## Deployment to Heroku
+
+25. Logged into my Heroku account and created a new app.
+
+26. In the 'Resources' tab searched for Heroku Postgres in the Add-Ons section, and select the free plan.
+
+27. In the 'Settings' tab clicked on 'Reveal Config Vars' to confirm that DATABASE_URL was there.
+
+28. Returned to my Gitpod workspace, to install the correct package version needed to use the Heroku Postgres database this command was used:
+
+    `pip3 install dj_database_url==0.5.0 psycopg2`
+
+29. Imported dj_database_url to settings.py:
+
+    ```bash
+    import dj_database_url
+    ```
+
+30. In settings.py updated the DATABASES variable to separate development and production environments:
+
+    ```bash
+    DATABASES = {
+        'default': ({
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        } if 'DEV' in os.environ else dj_database_url.parse(
+            os.environ.get('DATABASE_URL')
+        ))
+    }
+    ```
+
+31. Installed Gunicorn library with the command
+
+    `pip3 install gunicorn`
+
+32. Added a Procfile to the top level of the directory and added the following code
+
+    ```bash
+    release: python manage.py makemigrations && python manage.py migrate
+
+    web: gunicorn pet_palace_api.wsgi
+    ```
+
+33. Set ALLOWED_HOSTS in settings.py:
+
+    ```bash
+    ALLOWED_HOSTS = [
+        os.environ.get('ALLOWED_HOST'),
+        'localhost',
+    ]
+    ```
+
+34. Installed Cors Headers library with the terminal command
+
+    `pip3 install django-cors-headers`
+
+35. Added 'corsheaders' to INSTALLED_APPS in settings.py
+
+    ```bash
+    INSTALLED_APPS = [
+        ...
+        ...
+        'corsheaders',
+    ```
+
+36. To the top of the MIDDLEWARE variable in settings.py, added the corsheaders middleware
+
+    ```bash
+    MIDDLEWARE = [
+        'corsheaders.middleware.CorsMiddleware',
+        ...
+        ...
+    ]
+    ```
+
+37. Set ALLOWED_ORIGINS for network requests to the server and allow cookies with CORS_ALLOW_CREDENTIALS in settings.py:
+
+    ```bash
+    if 'CLIENT_ORIGIN' in os.environ:
+        CORS_ALLOWED_ORIGINS = [
+            os.environ.get('CLIENT_ORIGIN'),
+            os.environ.get('CLIENT_ORIGIN_DEV')
+        ]
+
+    else:
+        CORS_ALLOWED_ORIGIN_REGEXES = [
+            r"^https://.*\.gitpod\.io$",
+        ]
+    CORS_ALLOW_CREDENTIALS = True
+    ```
+
+38. Set JWT_AUTH_SAMESITE to 'None' to allow the front-end app and API to be deployed to different platforms, in settings.py added to the bottom of already set variables:
+
+    ```bash
+    # REST_USE_JWT = True
+    # JWT_AUTH_SECURE = True
+    # JWT_AUTH_COOKIE = 'my-app-auth'
+    # JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
+    JWT_AUTH_SAMESITE = 'None'
+    ```
+
+39. In env.py, set the SECRET_KEY value to a random value: 
+
+    ```bash
+    os.environ['SECRET_KEY'] = 'my random value here'
+    ```
+
+40. In settings.py, replaced the default SECRET_KEY variable with:
+
+    ```bash
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    ```
+
+41. In settings.py, set DEBUG from True to:
+
+    ```bash
+    DEBUG = 'DEV' in os.environ
+    ```
+
+42. Copied the CLOUDINARY_URL and SECRET_KEY values from env.py and added them to the Heroku config vars.
+
+43. Added config var COLLECT_STATIC and set it to 1.
+
+44. Updated the requirements.txt file with new dependencies
+
+	`pip3 freeze > requirements.txt`
+
+45. Added, committed and pushed changes to GitHub.
+
+46. On Heroku clicked on the 'Deploy' tab, and on 'Deployment Method' chose GitHub.
+
+47. Connected it to my pet-palace-api repository.
+
+48. In the 'Manual Deploy' section I selected the Main branch and clicked 'Deploy Branch'.
+
+49. Monitored the build log to ensure no error messages were displayed. If the build was successful, the app is now deployed.
+
+50. Click on 'Open app' to access the deployed app.
+
+### dj-rest-auth logout bug fix
+
+dj-test-auth currently has a bug that does not allow users to log out, to solve the situation these steps were followed:
+
+51. In the drf_api views.py file, import JWT_AUTH settings from settings.py:
+
+    ```bash
+    from .settings import (
+        JWT_AUTH_COOKIE, JWT_AUTH_REFRESH_COOKIE, JWT_AUTH_SAMESITE,
+        JWT_AUTH_SECURE)
+    ```
+
+    and added the following logout view code:
+
+    ```bash
+    @api_view(['POST'])
+        def logout_route(request):
+        """
+        dj-rest-auth logout view fix from Code Institute
+        Django REST Framework project
+        """
+        response = Response()
+        response.set_cookie(
+        key=JWT_AUTH_COOKIE,
+        value='',
+        httponly=True,
+        expires='Thu, 01 Jan 1970 00:00:00 GMT',
+        max_age=0,
+        samesite=JWT_AUTH_SAMESITE,
+        secure=JWT_AUTH_SECURE,
+        )
+        response.set_cookie(
+        key=JWT_AUTH_REFRESH_COOKIE,
+        value='',
+        httponly=True,
+        expires='Thu, 01 Jan 1970 00:00:00 GMT',
+        max_age=0,
+        samesite=JWT_AUTH_SAMESITE,
+        secure=JWT_AUTH_SECURE,
+        )
+        return response
+    ```
+
+52. Import the logout_route in the main urls.py file and added to the urlpatterns list. The logout_route must be placed above the default dj-rest-urls.
+
+    ```bash
+    from .views import root_route, logout_route
+    ```
+
+    ```bash
+        path('dj-rest-auth/logout/', logout_route),
+        path('dj-rest-auth/', include('dj_rest_auth.urls')),
+    ```
+
+53. Added, committed and pushed changes to GitHub
+
+54. Deployed manually from Heroku again
+
+### Setting up API for use with a front-end project
+
+To make the API work with the front end part some environment variables needed to be updated
+
+55. Copy the `... .herokuapp.com` value from ALLOWED_HOSTS in settings.py
+
+    ```bash
+    ALLOWED_HOSTS = [
+        '... .herokuapp.com',
+        'localhost',
+    ]
+    ```
+
+56. In Heroku, under settings add a new config vars with the key ALLOWED_HOST and the value of the copied value from the ALLOWED_HOST in the settings.py file.
+
+57. In settings.py, replace the copied value with the new ALLOWED_HOST environment variable
+
+    ```bash
+    ALLOWED_HOSTS = [
+        os.environ.get('ALLOWED_HOST'),
+        'localhost',
+    ]
+    ```
+
+58. Gitpod regularly changes its URL for the workspaces to make it more secure, to keep the API working with the front-end project later import the regular expression in settings.py
+
+    ```bash
+    import re
+    ```
+
+59. Replace the if/else statement for CLIENT_ORIGIN with the following:
+
+    ```bash
+    if 'CLIENT_ORIGIN_DEV' in os.environ:
+        extracted_url = re.match(r'^.+-', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE).group(0)
+        CORS_ALLOWED_ORIGIN_REGEXES = [
+            rf"{extracted_url}(eu|us)\d+\w\.gitpod\.io$",
+        ]
+    ```
+
+The value for CLIENT_ORIGIN_DEV will be set in Heroku once the front-end projects are up and running
+
+60. Add, commit and push changes to GitHub
+
+61. Manually deploy the API in Heroku once again
 
 ## Testing
 
