@@ -252,6 +252,14 @@ I re-wrote the code a bit inspired by other solutions I had seen and ended up wi
 
 ![datevalidationfix](/documentation/bugs/validationdatesolution.png)
 
+### Pagination
+
+I wanted some of the models to be ordered by first one attribute, and then by another if there were multiple objects with the same value.
+
+For example, petsittings are ordered first by status, but many petsittings can have the same status, I then want to order by date_from, but the same can be said here, many petsittings can have the same status and start date. Then the petsittings should be ordered by the newest first but this gave me a warning after adding pagination to settings.py, I tried adding .order_by to the queryset in the view, and the warnings disappeared so I guess that solved the issue.
+
+![pagination](/documentation/bugs/paginationerror.png)
+
 ## Credits
 
 - Code Institute's Django REST Framework walkthrough project which I have followed for setting up this project, deployment and also for the first apps: profiles, posts, comments, likes and followers. The walkthrough has inspired the base of the rest of the apps and their functionality as well.
