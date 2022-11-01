@@ -27,11 +27,13 @@ class AdSerializer(serializers.ModelSerializer):
     date_from = serializers.DateField(validators=[future_date_validation])
     date_to = serializers.DateField()
 
-    def validate(self, data):
+    def validate_date_to(self, data):
         """
         Check that date_from is before date_to.
         """
-        if data['date_from'] > data['date_to']:
+        date_from = self.initial_data['date_from']
+        date_to = self.initial_data['date_to']
+        if date_from > date_to:
             raise serializers.ValidationError(
                 "The end date must be before the start date")
         return data

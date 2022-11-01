@@ -31,8 +31,8 @@ class AdListTest(APITestCase):
         self.client.login(username='ere', password='pass')
         response = self.client.post(
             '/ads/', {
-                'title': 'Kitty watch', 'date_from': '2022-01-20',
-                'date_to': '2022-01-24', 'compensation': '100kr',
+                'title': 'Kitty watch', 'date_from': '2022-12-03',
+                'date_to': '2022-12-04', 'compensation': '100kr',
                 'location': 'home', 'description': 'a ad'})
         self.assertEqual(Ad.objects.count(), 2)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
