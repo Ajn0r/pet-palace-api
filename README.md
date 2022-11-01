@@ -242,6 +242,16 @@ I first had a rated attribute which was a foreign key to the User model to conne
 
 I forgot to update the `__str__` function after I removed the foreign key to the rated user, so when trying to access ratings in the admin panel it threw an error, but that was a quick fix.
 
+### Date validation
+
+I wanted to only allow the user to choose from dates in the future for ads, however, for petsittings, I thought it would be good to let users register petsittings that might have started already or that had already finished. This was done by adding a validator to the date_from in the ads serializer. I then wanted to make sure that the date_to was after the start date, which first was solved by adding the code from the [Django REST framework documentation](https://www.django-rest-framework.org/api-guide/serializers/#object-level-validation), however, this caused the Unit tests to throw an error, even if the validation seemed to work during the manual testing.
+
+![dateerror](/documentation/bugs/datevalidationerror.png)
+
+I re-wrote the code a bit inspired by other solutions I had seen and ended up with a code that worked both for the manual and the Unit tests.
+
+![datevalidationfix](/documentation/bugs/validationdatesolution.png)
+
 ## Credits
 
 - Code Institute's Django REST Framework walkthrough project which I have followed for setting up this project, deployment and also for the first apps: profiles, posts, comments, likes and followers. The walkthrough has inspired the base of the rest of the apps and their functionality as well.
