@@ -1,6 +1,29 @@
 # Testing
 
+- [Testing](#testing)
+  * [Unit testing](#unit-testing)
+    + [Profile views](#profile-views)
+    + [Post views](#post-views)
+    + [Comment views](#comment-views)
+    + [Pet views](#pet-views)
+    + [Ad views](#ad-views)
+    + [AdInterest views](#adinterest-views)
+    + [AppMessage views](#appmessage-views)
+    + [PetSitting testing](#petsitting-testing)
+    + [Rating view tests](#rating-view-tests)
+    + [All tests](#all-tests)
+  * [Manual testing](#manual-testing)
+    + [Manual tests](#manual-app-testing)
+    + [URLs](#urls)
+  * [Validation](#validation)
+
+[Back to README](README.md)
+
+The Pet Palace API is tested with both unit tests and manual tests, the unit testing used the Django REST frameworks APITestCase, and all manual tests were documented in an excel file.
+
 ## Unit testing
+
+There are 66 different test cases, all described under each app, the tests were mainly for the views of the different apps and all tests for the specific app were made once it was finished before moving on to creating the next app.
 
 ### Profile views
 
@@ -105,6 +128,8 @@ Some of the tests did test for the same thing as the unit tests but there were a
 
 While testing I found some small things I missed or that were not thought of during the development process such as users being allowed to have an end date before the start date on both petsittings and ads. This was dealt with, as well as other small issues such as the source for the owner being incorrect and some values missing in the serializer.
 
+### Manual app testing
+
 ![allmanualtest](/documentation/testing/allmanualtests.png)
 
 ### URLs
@@ -118,3 +143,7 @@ URLs were tested throughout the development process and once deployed both the d
 Validation was carried out for all files in all apps with the PEP8 validator pycodestyle in the Gitpod workspace. There were only some minor issues with whitespace and new lines missing at the end of the code which was easily fixed. In the settings.py file, five lines were too long, however, these were ignored by adding `# noqa` to the end of the lines since they were easily understood anyway and I felt like breaking it up might make it harder to understand, it was the 'auth passwords validators' and 'rest auth serializer' setting lines.
 
 ![validation](/documentation/testing/validations.png)
+
+[Back to README](README.md)
+
+[Back to top](#testing)
