@@ -154,46 +154,182 @@ I first had a field 'rated' that was a foreign key to the user that was to be ra
 
 I have followed the Code Institutes template from the Django rest DRF_API walkthrough to set up the project with Django and Cloudinary.
 
-1. The first step was to use the Code institute full template to create a new repository and open it in Gitpod.
+01. The first step was to use the Code institute full template to create a new repository and open it in Gitpod.
 
-2. Installing Django from the terminal `pip3 install 'django<4'`
+02. Installing Django from the terminal `pip3 install 'django<4'`
 
-3. Create a project: `django-admin startproject pet_palace_api`
+03. Create a project: `django-admin startproject pet_palace_api`
 
-4. Cloudinary libraries to manage static files `pip install django-cloudinary-storage`
+04. Cloudinary libraries to manage static files `pip install django-cloudinary-storage`
 
-5. Add Pillow for image processing `pip install Pillow`
+05. Add Pillow for image processing `pip install Pillow`
 
-6. Add cloudinary to INSTALLED_APPS
+06. Add cloudinary to INSTALLED_APPS
 
-7. Create an env.py file and import os `import os`
+07. Create an env.py file and import os `import os`
 
-8. Set the url variable value `os.environ['CLOUDINARY_URL'] = 'cloudinary://my-API-Environment-variable'`
+08. Set the url variable value `os.environ['CLOUDINARY_URL'] = 'cloudinary://my-API-Environment-variable'`
 
-9. Import os and add if statement in setting.py
-```
-import os
-if os.path.exists('env.py'):
-    import env
+09. Import os and add if statement in setting.py
 
-```
+    ```bash
+    import os
+    if os.path.exists('env.py'):
+        import env
 
-10. Setting the CLOUDINARY_STORAGE variable to equal the CLOUDINARY_URL variable 
-```
-CLOUDINARY_STORAGE = {
-    'CLOUDINARY_URL': os.environ.get('CLOUDINARY_URL')
-}
-```
+    ```
+
+10. Setting the CLOUDINARY_STORAGE variable to equal the CLOUDINARY_URL variable
+
+    ```bash
+    CLOUDINARY_STORAGE = {
+        'CLOUDINARY_URL': os.environ.get('CLOUDINARY_URL')
+    }
+    ```
 
 11. Add media storage URL `MEDIA_URL = '/media/'`
 
-12. Set default file storage to cloudinary 
-```
-DEFAULT_FILE_STORAGE = 
-    'cloudinary_storage.storage.MediaCloudinaryStorage'
-```
+12. Set default file storage to cloudinary
+
+    ```bash
+    DEFAULT_FILE_STORAGE = 
+        'cloudinary_storage.storage.MediaCloudinaryStorage'
+    ```
 
 Now the basic project was finished, the next step were to start setting up all the apps and adding them to the settings.py file.
+
+## Deployment
+
+I used the Code Institute Django REST framework project cheat sheet for the deployment of the project.
+
+### Setting up JSON web tokens
+
+1. Installed the django rest auth package by using the terminal command `pip3 install dj-rest-auth`
+
+2. In settings.py added both the authtokens and rest auth to the INSTALLED_APPs list:
+
+    ```bash
+    INSTALLED_APPS = [
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'cloudinary_storage',
+        'django.contrib.staticfiles',
+        'cloudinary',
+        'rest_framework',
+        'django_filters',
+        'rest_framework.authtoken',
+        'dj_rest_auth',
+    ```
+
+3. In the main urls.py file added the rest auth URL to the patterns list:
+
+    `path('dj-rest-auth/', include('dj_rest_auth.urls'))`
+
+4. Migrated the database using the terminal command `python3 manage.py migrate`
+
+5. To allow users to register installed Django Allauth with command
+
+    `pip3 install 'dj-rest-auth[with_social]’`
+
+6. In settings.py added the following to the installed app list
+
+    ```bash
+    'django.contrib.sites', 
+    'allauth', 
+    'allauth.account', 
+    'allauth.socialaccount', 
+    'dj_rest_auth.registration', 
+    ```
+
+7. Added the SITE_ID in settings.py
+    `SITE_ID = 1`
+
+8. In the main urls.py file added the registration URL to patterns
+
+    ```bash
+    path(
+        'dj-rest-auth/registration/',
+        include('dj_rest_auth.registration.urls')),
+    ```
+
+9. Installed the JSON tokens with the command
+
+    `pip3 install djangorestframework-simplejwt`
+
+10. In env.py set DEV to 1 to check if in development or production
+
+    `os.environ['DEV'] = '1'`
+
+11. In settings.py added an if/else statement to check if the project is in development or production
+
+    ```bash
+    REST_FRAMEWORK = { 
+        'DEFAULT_AUTHENTICATION_CLASSES': [( 
+            'rest_framework.authentication.SessionAuthentication' 
+            if 'DEV' in os.environ 
+            else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication' 
+            )],
+    ```
+
+12. To enable token authentication added REST_USE_JWT and set it to True, for making sure that tokens are only sent over HTTPS JWT_AUTH_SECURE was set to True. To declare cookie names for access and refresh tokens JWT_AUTH_COOKIE and JWT_AUTH_REFRESH_COOKIE values were set.
+These were added to the settings.py file:
+
+    ```bash
+    REST_USE_JWT = True
+    JWT_AUTH_SECURE = True
+    JWT_AUTH_COOKIE = 'my-app-auth'
+    JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
+    ```
+
+13. Created serializers.py file in the pet_palace_api directory, and copied the UserDetailsSerializer code from the Code Institue Django REST framework walkthrough that came from the Django REST documentation:
+
+    ```bash
+    from dj_rest_auth.serializers import UserDetailsSerializer
+    from rest_framework import serializers
+
+
+    class CurrentUserSerializer(UserDetailsSerializer):
+        """
+        For getting user profile information
+        Code from Code Institute Django REST
+        Framework project.
+        """
+        profile_id = serializers.ReadOnlyField(source='profile.id')
+        profile_image = serializers.ReadOnlyField(source='profile.image.url')
+
+        class Meta(UserDetailsSerializer.Meta):
+            fields = UserDetailsSerializer.Meta.fields + (
+                'profile_id', 'profile_image'
+            )
+
+    ```
+
+14. In settings.py overwrite the default User Detail serializer
+
+    ```bash
+    REST_AUTH_SERIALIZERS = { 
+        'USER_DETAILS_SERIALIZER': 'pet_palace_api.serializers.CurrentUserSerializer'
+    }
+    ```
+
+15. Run the migrations for the database again with the command:
+
+    `python3 manage.py migrate`
+
+16. Updated the requirements file with the command:
+
+    `pip3 freeze > requirements.txt`
+
+17. Made sure to save all files, add and commit all changes and pushed to GitHub.
+
+    ```bash
+    git add .
+    git commit -m "message"
+    git push
+    ```
 
 ## Testing
 
