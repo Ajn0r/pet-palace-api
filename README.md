@@ -245,6 +245,7 @@ I first had a field 'rated' that was a foreign key to the user that was to be ra
 - [The Django filters documentation](https://django-filter.readthedocs.io/en/stable/)
 - [Stack Overflow](https://stackoverflow.com/)
   - for ideas and inspiration on solutions.
+
 Default images for profiles and posts are from the Code Institute Django REST project.
 
 ## Setting up the project
@@ -751,6 +752,9 @@ The value for CLIENT_ORIGIN_DEV will be set in Heroku once the front-end project
 All testing documentation can be found [here](TESTS.md)
 
 ## Bugs
+
+While not being a but it is still worth mentioning, I did discover that interest is misspelt in a couple of places in the code.
+It's 'intrest' instead of interest, since it was discovered late in the development I let it be as is since I did not want to mess up, and it is still understandable even if it does have a Swedish flair to it.
 
 ### Ad
 
