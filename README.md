@@ -150,6 +150,51 @@ The user can rate anywhere from 1 to 5 and leave a comment for the rating. The r
 
 I first had a field 'rated' that was a foreign key to the user that was to be rated but found out I could connect it to the petsitter via the petsitting attribute instead.
 
+## Technologies and resources used
+
+### Languages
+
+- Python
+  - The Django REST framework base language
+
+### Modules
+
+![modulesused](/documentation/models/modules.png)
+
+### Platforms, libraries and programs
+
+- Heroku
+  - Used to deploy the application
+- Git
+  - For version control, committing and pushing to GitHub
+- GitHub
+  - For storing the repository, files and images pushed from Gitpod
+- Gitpod
+  - IDE used to code project
+- Django REST Framework
+- Django
+- Cloudinary
+  - Storage for images
+- Pillow
+  - Image processing capabilities
+- PostgreSQL
+- Cors Headers
+- Django Rest Auth
+- Django Filters
+
+### Resources
+
+- [Drawio](https://app.diagrams.net/)
+  - for creating the er diagrams
+- [Code Institute's](https://codeinstitute.net/) Django REST walkthrough project and cheat sheet for guidance for both setup, development and deployment of this project
+- [The Django REST documentation](https://www.django-rest-framework.org/)
+  - for a better understanding of the Framework and finding solutions.
+- [The Django documentation](https://docs.djangoproject.com/en/3.2/)
+- [The Django filters documentation](https://django-filter.readthedocs.io/en/stable/)
+- [Stack Overflow](https://stackoverflow.com/)
+  - for ideas and inspiration on solutions.
+Default images for profiles and posts are from the Code Institute Django REST project.
+
 ## Setting up the project
 
 I have followed the Code Institutes template from the Django rest DRF_API walkthrough to set up the project with Django and Cloudinary.
