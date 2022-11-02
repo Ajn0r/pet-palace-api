@@ -1,5 +1,19 @@
 # Pet Palace API
 
+The Pet Palace is a community site for pet lovers and pet owners where they can connect, add information about their pets, share images and posts, arrange petsittings and interact with each other.
+
+The users can rate other users based on their petsittings and leave a review to make other pet owners feel safe when choosing someone to take care of their beloved pet.
+
+Users can also send messages to each other, show interest in other users' ads and follow the profiles of people they like.
+
+The project is a Django REST Framework project and the fifth and final project with Code Institute.
+
+This is the API and backend part, the front end is a React project that can be found [here](https://github.com/Ajn0r/pet-palace)
+
+The API is deployed to Heroku and can be found [here](https://pet-palace-api.herokuapp.com/)
+
+The deployed React project is found [here](#)
+
 ## Models
 
 At the start of the project, a database model was created to map out the scope and information needs for the database.
