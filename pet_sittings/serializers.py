@@ -40,6 +40,7 @@ class PetSittingSerializer(serializers.ModelSerializer):
     """
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
+    profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     pets = PetToSitPKField(many=True)
     petsitter = PetSitterPKField()
     is_petsitter = serializers.SerializerMethodField()
@@ -71,5 +72,6 @@ class PetSittingSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'owner', 'petsitter', 'is_owner', 'pets', 'description',
             'date_from', 'date_to', 'compensation', 'location', 'status',
-            'created_at', 'updated_at', 'is_petsitter', 'nr_of_pets_to_sit'
+            'created_at', 'updated_at', 'is_petsitter', 'nr_of_pets_to_sit',
+            'profile_id'
         ]

@@ -12,6 +12,7 @@ class PetSerializer(serializers.ModelSerializer):
     with some alteration
     """
     owner = serializers.ReadOnlyField(source='owner.username')
+    profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     is_owner = serializers.SerializerMethodField()
     age = serializers.SerializerMethodField()
 
@@ -54,5 +55,5 @@ class PetSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'owner', 'name', 'description', 'image', 'type',
             'created_at', 'updated_at', 'is_owner', 'date_of_birth',
-            'age'
+            'age', 'profile_id'
         ]
