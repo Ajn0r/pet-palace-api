@@ -9,7 +9,7 @@ from pet_palace_api.permissions import IsOwnerOrReadOnly
 class AdList(generics.ListCreateAPIView):
     queryset = Ad.objects.annotate(
         nr_of_interest=Count('interests'),
-        ).order_by('status', 'date_from', '-created_at')
+        ).order_by('date_from', '-created_at')
     serializer_class = AdSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [
@@ -22,6 +22,7 @@ class AdList(generics.ListCreateAPIView):
         'pets',
         'status',
         'owner',
+        'interests__owner__profile'
     ]
     search_fields = [
         'owner__username',
