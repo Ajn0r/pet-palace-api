@@ -1,8 +1,8 @@
 from django.db.models import Count
 from rest_framework import generics, permissions, filters
 from django_filters.rest_framework import DjangoFilterBackend
-from .models import Ad
-from .serializers import AdSerializer
+from .models import Ad, PetChoice
+from .serializers import AdSerializer, PetChoiceSerializer
 from pet_palace_api.permissions import IsOwnerOrReadOnly
 
 
@@ -41,3 +41,8 @@ class AdDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Ad.objects.all()
     serializer_class = AdSerializer
     permission_classes = [IsOwnerOrReadOnly]
+
+
+class PetChoices(generics.ListAPIView):
+    queryset = PetChoice.objects.all()
+    serializer_class = PetChoiceSerializer
