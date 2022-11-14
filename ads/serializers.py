@@ -1,6 +1,13 @@
 from datetime import date
 from rest_framework import serializers
-from .models import Ad
+from .models import Ad, PetChoice
+
+
+class PetChoiceSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = PetChoice
+        fields = '__all__'
 
 
 def future_date_validation(value):
@@ -25,6 +32,11 @@ class AdSerializer(serializers.ModelSerializer):
     nr_of_interest = serializers.ReadOnlyField()
     date_from = serializers.DateField(validators=[future_date_validation])
     date_to = serializers.DateField()
+
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        rep["pets"] = PetChoiceSerializer(instance.pets.all(), many=True).data
+        return rep
 
     def validate_date_to(self, data):
         """
@@ -65,5 +77,6 @@ class AdSerializer(serializers.ModelSerializer):
             'id', 'owner', 'title', 'description', 'image', 'date_from',
             'date_to', 'compensation', 'location', 'status',
             'created_at', 'updated_at', 'is_owner', 'type', 'pets',
-            'nr_of_interest', 'profile_id',
+            'nr_of_interest', 'profile_id', 'get_status_display',
+            'get_type_display'
         ]

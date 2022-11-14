@@ -13,7 +13,7 @@ class PetToSitPKField(serializers.PrimaryKeyRelatedField):
     """
     def get_queryset(self):
         user = self.context['request'].user
-        queryset = Pet.objects.filter(owner=user).exclude(owner__is_staff=True)
+        queryset = Pet.objects.filter(owner=user)
         return queryset
 
 
@@ -42,7 +42,7 @@ class PetSittingSerializer(serializers.ModelSerializer):
     is_owner = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     pets = PetToSitPKField(many=True)
-    petsitter = PetSitterPKField()
+    petsitter = PetSitterPKField(source='petsitter.username')
     is_petsitter = serializers.SerializerMethodField()
     nr_of_pets_to_sit = serializers.ReadOnlyField()
     date_from = serializers.DateField()
@@ -73,5 +73,5 @@ class PetSittingSerializer(serializers.ModelSerializer):
             'id', 'owner', 'petsitter', 'is_owner', 'pets', 'description',
             'date_from', 'date_to', 'compensation', 'location', 'status',
             'created_at', 'updated_at', 'is_petsitter', 'nr_of_pets_to_sit',
-            'profile_id'
+            'profile_id', 'get_status_display',
         ]

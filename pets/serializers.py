@@ -55,5 +55,5 @@ class PetSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'owner', 'name', 'description', 'image', 'type',
             'created_at', 'updated_at', 'is_owner', 'date_of_birth',
-            'age', 'profile_id'
+            'age', 'profile_id', 'get_type_display'
         ]
