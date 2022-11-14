@@ -3,6 +3,16 @@ from django.contrib.auth.models import User
 from pets.models import Pet
 
 
+class PetChoice(models.Model):
+    """
+    Choices for pets for the Ad model
+    """
+    name = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Ad(models.Model):
     """
     Ad model class, for pet-sitting
@@ -11,23 +21,15 @@ class Ad(models.Model):
     If no pets added it is a ad for
     pet-sitters offering pet-sittings.
     """
-    PET_CHOISE_AD = [
-        ('C', 'Cat'), ('D', 'Dog'), ('B', 'Bird'),
-        ('H', 'Horse'), ('W', 'Wild animal'),
-        ('E', 'Exotic animal'), ('M', 'Mammal'),
-        ('F', 'Fish'), ('R', 'Reptile'), ('I', 'Insect'),
-        ('O', 'Other'), ('U', 'Unspecified')
-    ]
     STATUS_CHOISES = [
-        (0, 'Draft'), (1, 'Active'), (3, 'Finished')
+        (0, 'Draft'), (1, 'Active'), (2, 'Finished')
     ]
     TYPE_CHOISES = [
         (0, 'Pet-sitting'), (1, 'Pet-sitter'), (2, 'Unspecified')
     ]
     owner = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='ad_owner')
-    pets = models.CharField(
-        choices=PET_CHOISE_AD, default='U', max_length=20)
+    pets = models.ManyToManyField(PetChoice, related_name='ad', blank=True)
     type = models.SmallIntegerField(choices=TYPE_CHOISES, default=2)
     title = models.CharField(max_length=70)
     description = models.TextField()
