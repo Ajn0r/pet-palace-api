@@ -19,7 +19,7 @@ class Ad(models.Model):
         ('O', 'Other'), ('U', 'Unspecified')
     ]
     STATUS_CHOISES = [
-        (0, 'Draft'), (1, 'Active'), (2, 'Ongoing'), (3, 'Finished')
+        (0, 'Draft'), (1, 'Active'), (3, 'Finished')
     ]
     TYPE_CHOISES = [
         (0, 'Pet-sitting'), (1, 'Pet-sitter'), (2, 'Unspecified')

@@ -23,7 +23,7 @@ class AdSerializer(serializers.ModelSerializer):
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     is_owner = serializers.SerializerMethodField()
     pets = serializers.MultipleChoiceField(
-        choices=Ad.PET_CHOISE_AD).choice_strings_to_values
+        choices=Ad.PET_CHOISE_AD)
     nr_of_interest = serializers.ReadOnlyField()
     date_from = serializers.DateField(validators=[future_date_validation])
     date_to = serializers.DateField()
@@ -38,6 +38,24 @@ class AdSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 "The end date must be before the start date")
         return data
+
+    def validate_image(self, value):
+        """
+        Function to handle image validation
+        """
+        if value.size > 1024 * 1024 * 2:
+            raise serializers.ValidationError(
+                'The size of the image cannot be larger than 2MB'
+            )
+        if value.image.width > 4096:
+            raise serializers.ValidationError(
+                'The width of the image cannot be more than 4069px'
+            )
+        if value.image.height > 4096:
+            raise serializers.ValidationError(
+                'The height of the image cannot be more than 4069px'
+            )
+        return value
 
     def get_is_owner(self, obj):
         request = self.context['request']
