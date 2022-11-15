@@ -16,6 +16,9 @@ class RatingSerializer(serializers.ModelSerializer):
     rate_choise = [1, 2, 3, 4, 5]
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
+    profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
+    petsitter_profile_image = serializers.ReadOnlyField(
+        source='petsitting.petsitter.profile.image.url')
     petsitting = PetSitChoisePKField()
     rate = serializers.ChoiceField(choices=rate_choise)
     petsitter = serializers.ReadOnlyField(
@@ -39,6 +42,7 @@ class RatingSerializer(serializers.ModelSerializer):
             'id', 'owner', 'is_owner', 'petsitting',
             'rate', 'comment', 'petsitter', 'is_petsitter',
             'created_at', 'updated_at', 'petsitting_date',
+            'profile_image', 'petsitter_profile_image',
             ]
 
     def create(self, validated_data):

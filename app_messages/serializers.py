@@ -23,6 +23,8 @@ class AppMessageSerializer(serializers.ModelSerializer):
     is_owner = serializers.SerializerMethodField()
     reciver = serializers.ReadOnlyField(source='reciver.username')
     is_reciver = serializers.SerializerMethodField()
+    profile_id = serializers.ReadOnlyField(source='owner.profile.id')
+    profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
 
     def get_is_owner(self, obj):
         request = self.context['request']
@@ -36,7 +38,8 @@ class AppMessageSerializer(serializers.ModelSerializer):
         model = AppMessage
         fields = [
             'id', 'owner', 'reciver', 'is_owner',
-            'is_reciver', 'subject', 'sent', 'content']
+            'is_reciver', 'subject', 'sent', 'content'
+            'profile_id', 'profile_image']
 
 
 class CreateAppMessageSerializer(serializers.ModelSerializer):

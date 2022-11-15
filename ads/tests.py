@@ -15,7 +15,7 @@ class AdListTest(APITestCase):
     def setUp(self):
         ere = User.objects.create_user(username='ere', password='pass')
         Ad.objects.create(
-            owner=ere, title='Pet sitter', status=0, pets='C',
+            owner=ere, title='Pet sitter', status=0,
             date_from='2012-01-20', date_to='2012-01-24')
 
     def test_ad_list(self):

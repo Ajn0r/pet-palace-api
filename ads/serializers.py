@@ -28,6 +28,7 @@ class AdSerializer(serializers.ModelSerializer):
     """
     owner = serializers.ReadOnlyField(source='owner.username')
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
+    profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
     is_owner = serializers.SerializerMethodField()
     nr_of_interest = serializers.ReadOnlyField()
     date_from = serializers.DateField(validators=[future_date_validation])
@@ -78,5 +79,5 @@ class AdSerializer(serializers.ModelSerializer):
             'date_to', 'compensation', 'location', 'status',
             'created_at', 'updated_at', 'is_owner', 'type', 'pets',
             'nr_of_interest', 'profile_id', 'get_status_display',
-            'get_type_display'
+            'get_type_display', 'profile_image'
         ]

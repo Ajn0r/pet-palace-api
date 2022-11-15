@@ -41,8 +41,12 @@ class PetSittingSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
+    profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
+    petsitter_profile_image = serializers.ReadOnlyField(
+        source='petsitter.profile.image.url')
     pets = PetToSitPKField(many=True)
-    petsitter = PetSitterPKField(source='petsitter.username')
+    petsitter = PetSitterPKField()
+    petsitter_username = serializers.ReadOnlyField(source='petsitter.username')
     is_petsitter = serializers.SerializerMethodField()
     nr_of_pets_to_sit = serializers.ReadOnlyField()
     date_from = serializers.DateField()
@@ -73,5 +77,6 @@ class PetSittingSerializer(serializers.ModelSerializer):
             'id', 'owner', 'petsitter', 'is_owner', 'pets', 'description',
             'date_from', 'date_to', 'compensation', 'location', 'status',
             'created_at', 'updated_at', 'is_petsitter', 'nr_of_pets_to_sit',
-            'profile_id', 'get_status_display',
+            'profile_id', 'get_status_display', 'profile_image',
+            'petsitter_profile_image', 'petsitter_username'
         ]
