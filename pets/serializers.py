@@ -34,7 +34,7 @@ class PetSerializer(serializers.ModelSerializer):
         days = today.day - dob.day
         if (today.month < dob.month):
             return f"{years} Years, {12+months} months"
-        elif (months == 0):
+        elif (months == 0 and years <= 0):
             return f"{days} Days"
         else:
             return f"{years} Years, {months} months"
