@@ -33,6 +33,7 @@ class AdSerializer(serializers.ModelSerializer):
     nr_of_interest = serializers.ReadOnlyField()
     date_from = serializers.DateField(validators=[future_date_validation])
     date_to = serializers.DateField()
+    contact = serializers.ReadOnlyField(source='owner.profile.contact')
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
@@ -79,5 +80,5 @@ class AdSerializer(serializers.ModelSerializer):
             'date_to', 'compensation', 'location', 'status',
             'created_at', 'updated_at', 'is_owner', 'type', 'pets',
             'nr_of_interest', 'profile_id', 'get_status_display',
-            'get_type_display', 'profile_image'
+            'get_type_display', 'profile_image', 'contact'
         ]

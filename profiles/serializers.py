@@ -42,5 +42,5 @@ class ProfileSerializer(serializers.ModelSerializer):
             'created_at', 'updated_at', 'is_owner', 'nr_of_post',
             'following_id', 'followers_count', 'following_count',
             'nr_of_pets', 'rating', 'nr_of_ratings', 'nr_of_sittings',
-            'nr_of_msg_recived', 'nr_of_msg_sent'
+            'nr_of_msg_recived', 'nr_of_msg_sent', 'contact'
         ]

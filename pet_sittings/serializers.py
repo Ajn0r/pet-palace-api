@@ -51,6 +51,7 @@ class PetSittingSerializer(serializers.ModelSerializer):
     nr_of_pets_to_sit = serializers.ReadOnlyField()
     date_from = serializers.DateField()
     date_to = serializers.DateField()
+    contact = serializers.ReadOnlyField(source='owner.profile.contact')
 
     def validate_date_to(self, data):
         """
@@ -78,5 +79,5 @@ class PetSittingSerializer(serializers.ModelSerializer):
             'date_from', 'date_to', 'compensation', 'location', 'status',
             'created_at', 'updated_at', 'is_petsitter', 'nr_of_pets_to_sit',
             'profile_id', 'get_status_display', 'profile_image',
-            'petsitter_profile_image', 'petsitter_username'
+            'petsitter_profile_image', 'petsitter_username', 'contact'
         ]

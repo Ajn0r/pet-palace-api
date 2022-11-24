@@ -20,6 +20,7 @@ class Profile(models.Model):
     image = models.ImageField(
         upload_to='images/', default='../default_profile_ciez4a'
     )
+    contact = models.CharField(max_length=90, blank=True, null=True)
     type = models.IntegerField(choices=TYPE_CHOISES, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
