@@ -149,7 +149,7 @@ The compensation is a Charfield to give the user a bit more freedom to choose wh
 The status fields allow the user to choose if it’s a draft, active, ongoing or finished and the Type attribute allows users to specify if it is a pet-sitting, pet-sitter or other ad making it easy to filter later.
 The pet attribute is a multiple-choice where the user can specify what type of pet they either need a pet sitting or can pet sit.
 
-The users can filter ads on pets, status, ad owners and the type of ad it is.
+The users can filter ads on pets, status and the type of ad it is.
 
 ### Ad Interest App
 
@@ -167,8 +167,6 @@ The user must be logged in to be able to add interest to an ad and can only dele
 The AppMessage App lets Logged-in users send messages to each other that will contain a subject, the content of the message and the date and time when it was sent. The user can see all messages either sent by them or sent to them with the help of a custom filter, which also restricts other users from viewing any messages that are not sent to or from them.
 
 Updating the message is not possible since that would cause some confusion, the owner of the message can, however, delete it. I realise that it might not be the best solution for messages since the message will be deleted for both parties if the owner deletes it, it is however the only solution I could think of for the scope of the project as well as where my knowledge level is at the moment.
-
-With that in mind, I decided not to let the receiver of the message delete it, I am going to try to solve that on the front-end side instead. The app does also not contain any method for easy replying, I am hoping to solve this too on the front-end side. I believe it needs to be another model for replies to connect them to the message that the user is replying to otherwise, which is outside this project's scope.
 
 Even though there might be lacking some functionality to make it smoother, the main goal of the messaging app was to let users contact each other for setting up pet sittings. A future feature could be to add chat functionality with Django Channels, but for the scope of this project, I feel that the most important goal is met, which is that the user can send messages and only view the messages that belong to them.
 
@@ -786,6 +784,8 @@ Solution was inspired by [this code](https://django.fun/en/qa/426873/)
 ### Pets
 
 On the pets list, the pet owner wasn't displaying due to the source being not correct, it was resolved by adding the source 'owner.username' to the serializer.
+
+There was a logical error in the age calculation for the pet, I had set that it should return the number of days the pet is if it was under one month, however, I did not take into consideration that it would return the days if the pet was for example 3 years and 0 months. This was solved by adding 'and years <= 0' to the ternary.
 
 ### Posts
 
