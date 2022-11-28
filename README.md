@@ -40,6 +40,7 @@ The deployed React project is found [here](#)
     + [Deployment to Heroku](#deployment-to-heroku)
     + [dj-rest-auth logout bug fix](#dj-rest-auth-logout-bug-fix)
     + [Setting up API for use with a front-end project](#setting-up-api-for-use-with-a-front-end-project)
+    + [Nov 2022 update](#nov-2022-update)
   * [Testing](#testing)
   * [Bugs](#bugs)
     + [Ad](#ad)
@@ -744,6 +745,11 @@ The value for CLIENT_ORIGIN_DEV will be set in Heroku once the front-end project
 60. Add, commit and push changes to GitHub
 
 61. Manually deploy the API in Heroku once again
+
+### Nov 2022 update
+
+The database was migrated to ElephantSQL and the Heroku Postgres add-on was disconnected from the app in Heroku.
+The DATABASE_URL was then updated in the config vars on Heroku and the env.py file in the workspace.
 
 ## Testing
 
